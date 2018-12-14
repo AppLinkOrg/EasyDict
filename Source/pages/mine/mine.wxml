@@ -1,0 +1,48 @@
+<!--pages/mine/mine.wxml-->
+<view class='bg-primary flex-row flex-column padding-bottom-20' style='height:200rpx;width:100%'>
+<image class='icon-50 radius-50 margin-top ' src='{{UserInfo.avatarUrl}}'></image>
+<view class='txt-white margin-left-5'>{{UserInfo.nickName}}</view>
+</view>
+<navigator url='/pages/helpcenter/helpcenter' class='flex-row flex-center padding-40 bg-white'  >
+<image src='{{uploadpath}}resource/{{res.helpcenter}}' class='icon'></image>
+<view class='flex-1 padding-left-20'>帮助中心</view>
+<image src='{{uploadpath}}resource/{{res.right}}' class='icon-15'></image>
+</navigator>
+
+<view class='flex-row flex-center padding-40 bg-white' bindtap='btnopendetails' style='border-top:1rpx solid #CECFCE'>
+<image src='{{uploadpath}}resource/{{res.kefu}}' class='icon'></image>
+<view class='flex-1 padding-left-20'>联系客服</view>
+<image src='{{uploadpath}}resource/{{res.right}}' class='icon-15'></image>
+</view>
+
+<navigator url='/pages/aboutus/aboutus' class='flex-row flex-center padding-40 bg-white' style='border-top:1rpx solid #CECFCE'>
+<image src='{{uploadpath}}resource/{{res.aboutus}}' class='icon'></image>
+<view class='flex-1 padding-left-20'>关于我们</view>
+<image src='{{uploadpath}}resource/{{res.right}}' class='icon-15'></image>
+</navigator>
+
+
+<view class='' animation='{{animationData}}' hidden='{{open!=1}}'>
+  <view class='bg' bindtap='bindclosedetails' style='height:100%'>
+    <view class='' style=''></view>
+  </view>
+  <view class='under'>
+  
+  <view class=' flex-row flex-column'>
+    <view class='flex-row flex-center padding-20'>
+      <view class='txt-black text-center'>电话：</view>
+      <view class='txt-green '>{{instinfo.tel}}</view>
+    </view>
+
+    <view class='flex-row flex-center margin-20 text-center'>
+      <view class='txt-black'>微信号：</view>
+      <view class='txt-black'>{{instinfo.wechat}}</view>
+      <view class='txt-primary margin-left-40' bindtap='binddobut'>复制</view>
+    </view>
+
+    <view class='margin-top-20' style='height:4rpx;background:#CECFCE;width:100%'></view>
+    
+  </view>
+  <view  bindtap='bindclosedetails' class='margin-top-20  text-center' style='width:100%'>取消</view>
+  </view>
+</view>

@@ -14,23 +14,27 @@ class Content extends AppBase {
   }
   onMyShow() {
     var that = this;
-    var list=[];
+    var instapi = new InstApi();
+    instapi.indexbanner({  }, (indexbanner) => {
+      this.Base.setMyData({ indexbanner });
+    });
+    // var list=[];
   
-    list.push({ word: "polite", yinbiao: "pə'laɪt" });
-    list.push({ word: "clever", yinbiao: "klevə" });
-    list.push({ word: "sometimes", yinbiao: "sʌmtaɪmz" });
-    list.push({ word: "robot", yinbiao: "rəʊbɒt" });
-    list.push({ word: "speak", yinbiao: "spiːk" });
-    list.push({ word: "finish", yinbiao: "fɪnɪʃ" });
-    list.push({ word: "Monday", yinbiao: "ˈmʌndeɪ" });
-    list.push({ word: "Tuesday", yinbiao: "tjuːzdeɪ" });
-    list.push({ word: "Wednesday", yinbiao: "ˈwenzdeɪ" });
-    list.push({ word: "Thursday", yinbiao: "θɜːzdeɪ" });
-    for (var i = 0; i < list.length; i++) {
-      var res=this.calc(list[i]);
-      list[i].res=res;
-    }
-    this.Base.setMyData({ list});
+    // list.push({ word: "polite", yinbiao: "pə'laɪt" });
+    // list.push({ word: "clever", yinbiao: "klevə" });
+    // list.push({ word: "sometimes", yinbiao: "sʌmtaɪmz" });
+    // list.push({ word: "robot", yinbiao: "rəʊbɒt" });
+    // list.push({ word: "speak", yinbiao: "spiːk" });
+    // list.push({ word: "finish", yinbiao: "fɪnɪʃ" });
+    // list.push({ word: "Monday", yinbiao: "ˈmʌndeɪ" });
+    // list.push({ word: "Tuesday", yinbiao: "tjuːzdeɪ" });
+    // list.push({ word: "Wednesday", yinbiao: "ˈwenzdeɪ" });
+    // list.push({ word: "Thursday", yinbiao: "θɜːzdeɪ" });
+    // for (var i = 0; i < list.length; i++) {
+    //   var res=this.calc(list[i]);
+    //   list[i].res=res;
+    // }
+    //this.Base.setMyData({ list});
   }
 
   calc(item){
@@ -271,7 +275,12 @@ class Content extends AppBase {
     }
     return res;
   }
-
+  listen(e){
+    wx.showToast({
+      title: '你听到了',
+      icon:'none'
+    })
+  }
 
 }
 var content = new Content();
@@ -280,4 +289,5 @@ body.onLoad = content.onLoad;
 body.onMyShow = content.onMyShow; 
 body.calc = content.calc;
 body.insert_flg = content.insert_flg;
+body.listen = content.listen;
 Page(body)

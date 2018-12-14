@@ -1,0 +1,20 @@
+<!--pages/helpcenter/helpcenter.wxml-->
+<view class='flex-row flex-column'>
+<image class='icon-75' src='{{uploadpath}}resource/{{res.helpcenter}}'></image>
+</view>
+
+<view class='margin-40 bg-white border-radius' hidden='{{item.status!="A"}}'  wx:for='{{helpercenterlist}}' wx:key='k' >
+<view class='txt-primary padding-30 h5' style='border-bottom:1rpx dashed #e5e4e7'>{{item.content}}</view>
+<view   class='margin-20 padding-10' >
+<view class='h5'>{{item.helpecontent}}</view>
+</view>
+</view>
+
+<view class='margin-40 bg-white border-radius' hidden='{{item.status!="I"}}'  wx:for='{{helpercenterlist}}' wx:key='k'>
+<view class='txt-primary padding-30 h5' style='border-bottom:1rpx dashed #e5e4e7'>{{item.content}}</view>
+<view   class='margin-20 padding-10' >
+<view class='txt-primary'>{{item.title}}</view>
+<view class='h5'>{{item.helpecontent}}</view>
+</view>
+</view>
+

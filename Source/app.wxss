@@ -101,7 +101,7 @@ view,navigator,input,text,textarea{
   background: white;
 }
 .bg-primary{
-  background: #2699EC;
+  background: #17607D;
 }
 .bg-green{
   background: #23AC38;
@@ -122,7 +122,7 @@ view,navigator,input,text,textarea{
   
 }
 .txt-primary{
-  color:#2699EC;
+  color:#17607D;
 }
 .txt-black{
   color: black;

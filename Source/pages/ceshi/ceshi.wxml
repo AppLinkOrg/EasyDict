@@ -1,0 +1,31 @@
+<!--pages/ceshi/ceshi.wxml-->
+
+
+<view class="commodity_screen" bindtap="showModal" wx:if="{{showModalStatus=='true'}}">sssssss</view>
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus=='true'}}">hhhhghh</view>
+
+<view bindtap='btnopendetails'>OPEN</view>
+<view class='' hidden='{{open!=1}}'>
+  <view class='bg' bindtap='bindclosedetails' style='height:100%'>
+    <view class='' style=''></view>
+  </view>
+
+  <view class='under flex-row flex-column'>
+
+
+    <view class='flex-row flex-center padding-20'>
+      <view class='txt-black text-center'>电话：</view>
+      <view class='txt-green '>400-3838-4338</view>
+    </view>
+
+    <view class='flex-row flex-center margin-20 text-center'>
+      <view class='txt-black'>微信号：</view>
+      <view class='txt-black'>遗忘之阿斯兰</view>
+      <view class='txt-primary margin-left-40'>复制</view>
+    </view>
+
+    <view class='margin-top-20' style='height:4rpx;background:#CECFCE;width:100%'></view>
+
+    <view bindtap='bindclosedetails' class='margin-top-20'>取消</view>
+  </view>
+</view>

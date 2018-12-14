@@ -1,51 +1,39 @@
-.Top{
-  background-color:#2699EC;
+Page{
+  padding-bottom: 50rpx;
 }
-.search{
-  width:680rpx;
-  border-radius: 7rpx;
-  background-color: white;
-}
-.search_icon{
-  height:40rpx;
-  width:40rpx;
-}
-.Mid{
-  height: 150rpx;
-}
-.mid1{
-  background:#F6511D;
-  border-radius:10rpx;
-}
-.mid2{
-  background:#FFB400;
-  border-radius:10rpx;
-}
-.evaluation{
-  background-color: #2699EC;
+.evaluation {
+  background-color: #17607d;
   border-radius: 10rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
 }
-.Under{
-  margin-top: 50rpx;
-  border-bottom: 1rpx solid rgb(233, 231, 231);
-}
-.phone{
+
+.evaluation_hover {
+  background-color: rgb(41, 132, 168);
   border-radius: 10rpx;
-  box-shadow: 1px 1px 7px rgb(231, 228, 228);
+  margin-left: 20rpx;
+  margin-right: 20rpx;
 }
-.icon{
-  width: 110rpx;
+
+.text_box {
+  font-size: 30rpx;
+  border-radius: 10rpx;
+  min-height: 120rpx;
+  width: 94%;
+  background-color: #e5e5e5;
+}
+
+.img {
+  opacity: 0.7;
   height: 180rpx;
+  width: 340rpx;
 }
-.column{
-  align-content: center;
-  flex-direction:column;
+
+.mid {
+  border-top: 4rpx solid #cfcecf;
+  border-bottom: 4rpx solid #cfcecf;
 }
-.ma-0{
-  margin-left: 20rpx;
-}
-.ma-1{
-  margin-left: 20rpx;
+.dic {
+  
+  border-bottom: 1rpx solid #cfcecf;
 }
