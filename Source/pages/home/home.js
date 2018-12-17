@@ -2,6 +2,7 @@
 import { AppBase } from "../../appbase";
 import { ApiConfig } from "../../apis/apiconfig";
 import { InstApi } from "../../apis/inst.api.js";
+import { TranslateApi } from "../../apis/translate.api.js";
 
 class Content extends AppBase {
   constructor() {
@@ -36,6 +37,22 @@ class Content extends AppBase {
     // }
     //this.Base.setMyData({ list});
   }
+  gotrans(e){
+    console.log(e);
+    var word=e.detail.value.word.trim();
+    if(word==""){
+      this.Base.toast("请输入中文或英文单词");
+      return;
+    }
+    var api=new TranslateApi();
+    api.trans({word},(wordresult)=>{
+      if (wordresult.ps!=""){
+        var item={word:wordresult.key,yinbiao:wordresult.ps};
+        wordresult["easy"] = this.calc(item);
+      }
+      this.Base.setMyData({wordresult});
+    });
+  }
 
   calc(item){
     var word = item.word.toLowerCase();
@@ -46,6 +63,7 @@ class Content extends AppBase {
     word = word.replace(new RegExp("air", "gm"), ";AIR;");
     word = word.replace(new RegExp("oor", "gm"), ";OOR;");
     word = word.replace(new RegExp("OUR", "gm"), ";OUR;");
+    word = word.replace(new RegExp("ea", "gm"), ";EA;");
     word = word.replace(new RegExp("er", "gm"), ";ER;");
     word = word.replace(new RegExp("ar", "gm"), ";AR;");
     word = word.replace(new RegExp("ir", "gm"), ";IR;");
@@ -68,6 +86,8 @@ class Content extends AppBase {
     var yinbiao = item.yinbiao.toLowerCase();
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":");
+    yinbiao = yinbiao.replace("(", "");
+    yinbiao = yinbiao.replace(")", "");
 
     yinbiao = yinbiao.replace(new RegExp("ʊə", "gm"), ";1;");
     yinbiao = yinbiao.replace(new RegExp("eə", "gm"), ";2;");
@@ -205,7 +225,11 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: "O" });
             }
           } else if (nyinbiao[i] == "14") {
-            res.push({ f: "CCC", c: "~" });
+            if(c=="ea"){
+              res.push({ f: "CCC", c: "Ra" });
+            }else{
+              res.push({ f: "CCC", c: "~" });
+            }
           } else if (nyinbiao[i] == "15") {
             if (c == "i") {
               res.push({ f: "CCC", c: "I" });
@@ -297,6 +321,7 @@ body.onLoad = content.onLoad;
 body.onMyShow = content.onMyShow; 
 body.calc = content.calc;
 body.insert_flg = content.insert_flg;
-body.listen = content.listen;
-body.toauth=content.toauth;
+body.listen = content.listen; 
+body.toauth = content.toauth;
+body.gotrans = content.gotrans;
 Page(body)

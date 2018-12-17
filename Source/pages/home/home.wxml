@@ -23,57 +23,63 @@
 
 <view class='margin-top-20 '>
   <view class='padding-20 txt-black txt-bold'>英汉翻译</view>
-
-  <view class=''>
-    <view class='margin-20 '>
-      <textarea style='' auto-height='true' maxlength='-1' class='padding-20 text_box' placeholder='填写需要翻译的内容，只能输入英文单词或者汉词组'></textarea>
-    </view>
-
-    <button style='margin-top:60rpx' bindtap='toauth' hover-class='evaluation_hover' class='evaluation txt-white '>点击翻译</button>
-  </view>
-
-  <view class='text-center flex-row flex-column margin-top-80' hidden='true'>
-    <image class='margin-left-40 img' src='{{uploadpath}}resource/{{res.notyet}}'></image>
-    <view class='h5 margin-top-20'>暂无收录,请点击联系客服添加</view>
-  </view>
-
-  <view style='' class=' mid margin-top-80'>
-    <view class='padding-20 txt-black txt-bold'>简易音标</view>
-    <view class='flex-row flex-column '>
-      <view class='text-center h2 txt-black txt-bold' style='margin-bottom:70rpx;margin-top:30rpx;'>PICKER
-        <image bindtap='listen' class='icon' src='{{uploadpath}}resource/{{res.laba}}'></image>
+  <form bindsubmit='gotrans'>
+    <view class=''>
+      <view class='margin-20 '>
+        <textarea style='' auto-height='true' maxlength='-1' class='padding-20 text_box' placeholder='填写需要翻译的内容，只能输入英文单词或者汉词组' name="word"></textarea>
       </view>
+
+      <button style='margin-top:60rpx' form-type='submit' hover-class='evaluation_hover' class='evaluation txt-white '>点击翻译</button>
     </view>
-  </view>
-
- <view style='' class=' dic margin-bottom padding-bottom-20'>
-    <view class='padding-20 txt-black txt-bold'>词典翻译</view>
-
-    <view class='flex-row flex-center margin-left-20'>
-    <view class='txt-primary '>pepper</view>
-    <view class='txt-gray'>【dfgdfg】</view>
-    </view>
-
-    <view class='flex-row flex-center margin-20'>
-    <view class='txt-gray'>n. </view>
-    <view class='txt-gray margin-left-10'>胡椒粉; 辣椒; 胡椒粉</view>
+  </form>
+  <block wx:if="{{wordresult!=undefined}}">
+    <view class='text-center flex-row flex-column margin-top-80' wx:if='{{wordresult.acceptation==undefined||wordresult.acceptation.length==0}}'>
+      <image class='margin-left-40 img' src='{{uploadpath}}resource/{{res.notyet}}'></image>
+      <view class='h5 margin-top-20'>暂无收录,请点击联系客服添加</view>
     </view>
 
-  </view>
+    <block wx:if='{{wordresult.acceptation.length>0}}'>
+      <view style='' class=' mid margin-top-80'  wx:if="{{wordresult.ps!=''}}">
+        <view class='padding-20 txt-black txt-bold'>简易音标</view>
+        <view class='flex-row flex-column '>
+          <view class='text-center h2 txt-black txt-bold' style='margin-bottom:70rpx;margin-top:30rpx;'><text wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='h4 {{cs.f}}'>{{cs.c}}</text>
+            <image bindtap='listen' class='icon margin-left' src='{{uploadpath}}resource/{{res.laba}}' ></image>
+          </view>
+        </view>
+      </view>
+
+      <view style='' class=' dic margin-bottom padding-bottom-20'>
+        <view class='padding-20 txt-black txt-bold'>词典翻译</view>
+
+        <view class='flex-row flex-center margin-left-20'>
+          <view class='txt-primary '>{{wordresult.key}}</view>
+          <view class='txt-gray'  wx:if="{{wordresult.ps!=''}}">【{{wordresult.ps}}】</view>
+        </view>
+        <view class='margin-left-20'>
+          <view class='flex-row ' wx:for="{{wordresult.pos}}" wx:key="k" wx:for-index="i">
+            <view class='txt-gray'>{{wordresult.pos[i]}}</view>
+            <view class='txt-gray margin-left-10 flex-1'>
+              {{wordresult.acceptation[i]}}
+            </view>
+          </view>
+        </view>
+
+      </view>
 
 
-  <view style='' class=' margin-bottom padding-bottom-20'>
-    <view class=' txt-black txt-bold' style='padding-left:20rpx;margin-top:20rpx'>例句</view>
+      <view style='' class=' margin-bottom padding-bottom-20'>
+        <view class=' txt-black txt-bold' style='padding-left:20rpx;margin-top:20rpx'>例句</view>
 
-    <view class='flex-row column padding-20' >
-    <view class='txt-black '>你可以尝出菜里面的辣椒，不过味道有点甜。</view>
-    <view class='txt-gray margin-top-5'>You can taste the pepper in the dish but it is a little sweet.</view>
-    </view>
+        <view class='flex-row column padding-20'  wx:for="{{wordresult.sent}}" wx:key="k">
+          <view class='txt-black '>{{item.orig}}</view>
+          <view class='txt-gray margin-top-5'>{{item.trans}}</view>
+        </view>
 
-    <!-- <view class='flex-row flex-center margin-20'>
+        <!-- <view class='flex-row flex-center margin-20'>
     <view class='txt-gray'>You can taste the pepper in the dish but it is a little sweet.</view>
     </view> -->
 
-  </view>
-
+      </view>
+    </block>
+  </block>
 </view>
