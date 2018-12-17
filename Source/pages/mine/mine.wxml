@@ -28,8 +28,8 @@
   </view>
   <view class='under'>
   
-  <view class=' flex-row flex-column'>
-    <view class='flex-row flex-center padding-20'>
+  <view class=' flex-row flex-column' >
+    <view class='flex-row flex-center padding-20' bindtap='phoneCall' id='{{instinfo.tel}}'>
       <view class='txt-black text-center'>电话：</view>
       <view class='txt-green '>{{instinfo.tel}}</view>
     </view>

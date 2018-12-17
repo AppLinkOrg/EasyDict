@@ -282,6 +282,14 @@ class Content extends AppBase {
     })
   }
 
+  toauth(e){
+   wx.navigateTo({
+     url: '/pages/auth/auth',
+     success: function(res) {},
+     fail: function(res) {},
+     complete: function(res) {},
+   })
+  }
 }
 var content = new Content();
 var body = content.generateBodyJson();
@@ -290,4 +298,5 @@ body.onMyShow = content.onMyShow;
 body.calc = content.calc;
 body.insert_flg = content.insert_flg;
 body.listen = content.listen;
+body.toauth=content.toauth;
 Page(body)

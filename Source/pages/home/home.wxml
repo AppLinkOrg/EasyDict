@@ -11,7 +11,7 @@
 </view> -->
 <view>
 
-  <swiper indicator-dots='true' autoplay='false' interval='3000' duration='500' circular='true' style='width:750rpx;height:250rpx;'>
+  <swiper indicator-dots='true' autoplay='false' interval='3000' duration='500' circular='true' style='width:750rpx;height:350rpx;'>
     <swiper-item wx:for="{{indexbanner}}" wx:key="k">
       <view>
         <!-- mode="aspectFill" -->
@@ -29,7 +29,7 @@
       <textarea style='' auto-height='true' maxlength='-1' class='padding-20 text_box' placeholder='填写需要翻译的内容，只能输入英文单词或者汉词组'></textarea>
     </view>
 
-    <button style='margin-top:60rpx' hover-class='evaluation_hover' class='evaluation txt-white '>点击翻译</button>
+    <button style='margin-top:60rpx' bindtap='toauth' hover-class='evaluation_hover' class='evaluation txt-white '>点击翻译</button>
   </view>
 
   <view class='text-center flex-row flex-column margin-top-80' hidden='true'>
@@ -38,16 +38,16 @@
   </view>
 
   <view style='' class=' mid margin-top-80'>
-    <view class='padding-20 txt-black'>简易音标</view>
+    <view class='padding-20 txt-black txt-bold'>简易音标</view>
     <view class='flex-row flex-column '>
-      <view class='text-center h3 txt-black txt-bold' style='margin-bottom:70rpx;margin-top:30rpx;'>PICKER
+      <view class='text-center h2 txt-black txt-bold' style='margin-bottom:70rpx;margin-top:30rpx;'>PICKER
         <image bindtap='listen' class='icon' src='{{uploadpath}}resource/{{res.laba}}'></image>
       </view>
     </view>
   </view>
 
  <view style='' class=' dic margin-bottom padding-bottom-20'>
-    <view class='padding-20 txt-black'>词典翻译</view>
+    <view class='padding-20 txt-black txt-bold'>词典翻译</view>
 
     <view class='flex-row flex-center margin-left-20'>
     <view class='txt-primary '>pepper</view>
@@ -63,7 +63,7 @@
 
 
   <view style='' class=' margin-bottom padding-bottom-20'>
-    <view class=' txt-black' style='padding-left:20rpx;margin-top:20rpx'>例句</view>
+    <view class=' txt-black txt-bold' style='padding-left:20rpx;margin-top:20rpx'>例句</view>
 
     <view class='flex-row column padding-20' >
     <view class='txt-black '>你可以尝出菜里面的辣椒，不过味道有点甜。</view>

@@ -31,10 +31,16 @@ class Content extends AppBase {
     });
     //open-type="getUserInfo" bindgetuserinfo="getUserInfo"
   }
+  tohome(e){
+   wx.reLaunch({
+     url: '/pages/home/home',
+   })
+  }
 }
 var content = new Content();
 var body = content.generateBodyJson();
 body.onLoad = content.onLoad; 
 body.onMyShow = content.onMyShow;
 body.getUserInfo = content.getUserInfo;
+body.tohome=content.tohome;
 Page(body)
