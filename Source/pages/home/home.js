@@ -15,17 +15,43 @@ class Content extends AppBase {
   onMyShow() {
     var that = this;
     var list=[];
-  
+   
     list.push({ word: "polite", yinbiao: "pə'laɪt" });
-    list.push({ word: "clever", yinbiao: "klevə" });
+    list.push({ word: "clever", yinbiao: "clevə" });
     list.push({ word: "sometimes", yinbiao: "sʌmtaɪmz" });
     list.push({ word: "robot", yinbiao: "rəʊbɒt" });
     list.push({ word: "speak", yinbiao: "spiːk" });
-    list.push({ word: "finish", yinbiao: "fɪnɪʃ" });
+    list.push({ word: "finish", yinbiao: "'fɪnɪʃ" });
     list.push({ word: "Monday", yinbiao: "ˈmʌndeɪ" });
     list.push({ word: "Tuesday", yinbiao: "tjuːzdeɪ" });
     list.push({ word: "Wednesday", yinbiao: "ˈwenzdeɪ" });
     list.push({ word: "Thursday", yinbiao: "θɜːzdeɪ" });
+
+    list.push({ word: "Friday", yinbiao: "ˈfraɪdeɪ" });
+    list.push({ word: "Saturday", yinbiao: "ˈsætədeɪ" });
+    list.push({ word: "Sunday", yinbiao: "ˈsʌndeɪ" });
+    list.push({ word: "weekend", yinbiao: "wiːkˈɛnd" });
+    list.push({ word: "wash", yinbiao: "wɒʃ" });
+    list.push({ word: "watch", yinbiao: "wɒtʃ" });
+    list.push({ word: "schedule", yinbiao: "ˈʃedju:l" });
+    list.push({ word: "delicious", yinbiao: "dɪ'lɪʃəs" });
+    list.push({ word: "problem", yinbiao: "'prɒbləm" });
+    list.push({ word: "photo", yinbiao: "'fəʊtəʊ" });
+    list.push({ word: "rabbit", yinbiao: "'ræbɪt" });
+    list.push({ word: "house", yinbiao: "haʊs" });
+    list.push({ word: "spring", yinbiao: "sprɪŋ" });
+    list.push({ word: "February", yinbiao: "ˈfebrʊərɪ" });
+    list.push({ word: "birthday", yinbiao: "'bɜːθdeɪ" });
+    list.push({ word: "usually", yinbiao: "ˈjuːʒʊəlɪ" });
+    list.push({ word: "uncle", yinbiao: "'ʌŋkl" });
+    list.push({ word: "eighth", yinbiao: "eɪtθ" });
+    list.push({ word: "village", yinbiao: "'vɪlɪdʒ" });
+    list.push({ word: "snow", yinbiao: "'snəʊ" });
+    list.push({ word: "whether", yinbiao: "'weðə" });
+    list.push({ word: "wholly", yinbiao: "həʊllɪ" });
+
+
+
     for (var i = 0; i < list.length; i++) {
       var res=this.calc(list[i]);
       list[i].res=res;
@@ -35,13 +61,20 @@ class Content extends AppBase {
 
   calc(item){
     var word = item.word.toLowerCase();
+    word = word.replace(new RegExp("sch", "gm"), ";SCH;");
+    word = word.replace(new RegExp("ght", "gm"), ";GHT;");
     word = word.replace(new RegExp("ere", "gm"), ";ERE;");
     word = word.replace(new RegExp("ear", "gm"), ";EAR;");
     word = word.replace(new RegExp("eer", "gm"), ";EER;");
     word = word.replace(new RegExp("are", "gm"), ";ARE;");
     word = word.replace(new RegExp("air", "gm"), ";AIR;");
     word = word.replace(new RegExp("oor", "gm"), ";OOR;");
-    word = word.replace(new RegExp("OUR", "gm"), ";OUR;");
+    word = word.replace(new RegExp("our", "gm"), ";OUR;");
+    word = word.replace(new RegExp("iou", "gm"), ";IOU;");
+    word = word.replace(new RegExp("ual", "gm"), ";UAL;");
+    word = word.replace(new RegExp("ay", "gm"), ";AY;");
+    word = word.replace(new RegExp("ua", "gm"), ";UA;");
+    word = word.replace(new RegExp("ea", "gm"), ";EA;");
     word = word.replace(new RegExp("er", "gm"), ";ER;");
     word = word.replace(new RegExp("ar", "gm"), ";AR;");
     word = word.replace(new RegExp("ir", "gm"), ";IR;");
@@ -50,18 +83,37 @@ class Content extends AppBase {
     word = word.replace(new RegExp("ou", "gm"), ";OU;");
     word = word.replace(new RegExp("ow", "gm"), ";OW;");
     word = word.replace(new RegExp("ey", "gm"), ";EY;");
+    word = word.replace(new RegExp("ei", "gm"), ";EI;");
     word = word.replace(new RegExp("oi", "gm"), ";OI;");
     word = word.replace(new RegExp("oy", "gm"), ";OY;");
+
+    word = word.replace(new RegExp("ph", "gm"), ";PH;");
+    word = word.replace(new RegExp("sh", "gm"), ";SH;");
+    word = word.replace(new RegExp("qu", "gm"), ";QU;");
+    word = word.replace(new RegExp("dr", "gm"), ";dr;");
+    word = word.replace(new RegExp("gh", "gm"), ";GH;");
+    word = word.replace(new RegExp("th", "gm"), ";TH;");
+    word = word.replace(new RegExp("wh", "gm"), ";WH;");
+    word = word.replace(new RegExp("dn", "gm"), ";DN;");
+    word = word.replace(new RegExp("ch", "gm"), ";CH;");
+    word = word.replace(new RegExp("bb", "gm"), ";BB;");
+    word = word.replace(new RegExp("ng", "gm"), ";NG;");
+    word = word.replace(new RegExp("ly", "gm"), ";L;Y;");
+    word = word.replace(new RegExp("ll", "gm"), ";LL;");
+
     word = word.replace(new RegExp("a", "gm"), ";A;");
     word = word.replace(new RegExp("e", "gm"), ";E;");
     word = word.replace(new RegExp("i", "gm"), ";I;");
     word = word.replace(new RegExp("o", "gm"), ";O;");
     word = word.replace(new RegExp("u", "gm"), ";U;");
     word = word.replace(new RegExp("r", "gm"), ";R;");
-    word = word.replace(new RegExp("Y", "gm"), ";Y;");
+    word = word.replace(new RegExp("y", "gm"), ";Y;");
     word = word.replace(new RegExp("w", "gm"), ";W;");
+    //console.log(word);
     
     var yinbiao = item.yinbiao.toLowerCase();
+    yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "'");
+    var zhongidx = yinbiao.indexOf("'"); 
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":");
 
@@ -72,7 +124,10 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("eɪ", "gm"), ";5;");
     yinbiao = yinbiao.replace(new RegExp("aʊ", "gm"), ";6;");
     yinbiao = yinbiao.replace(new RegExp("aɪ", "gm"), ";15;");
+    yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
+    yinbiao = yinbiao.replace(new RegExp("əʊ", "gm"), ";3101;"); 
     yinbiao = yinbiao.replace(new RegExp("ɜ:", "gm"), ";7;");
+    yinbiao = yinbiao.replace(new RegExp("ɛ", "gm"), ";;"); //没有对应
     yinbiao = yinbiao.replace(new RegExp("ʌ", "gm"), ";8;");
     yinbiao = yinbiao.replace(new RegExp("æ", "gm"), ";9;");
     yinbiao = yinbiao.replace(new RegExp("ɔ:", "gm"), ";10;");
@@ -85,6 +140,22 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("a:", "gm"), ";17;");
     yinbiao = yinbiao.replace(new RegExp("ə", "gm"), ";18;");
     yinbiao = yinbiao.replace(new RegExp("a", "gm"), ";;");
+    yinbiao = yinbiao.replace(new RegExp("gz", "gm"), ";25;");
+    yinbiao = yinbiao.replace(new RegExp("dʒ", "gm"), ";22;");
+    yinbiao = yinbiao.replace(new RegExp("ʃ", "gm"), ";SH;"); 
+
+    
+
+
+    var uyin = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p"
+      , "q", "s", "t", "v", "x", "z"];
+
+    for (var i = 0; i < uyin.length; i++) {
+      word = word.replace(new RegExp(uyin[i], "gm"), ";" + uyin[i] + ";");
+    }
+    for(var i=0;i<uyin.length;i++){
+      yinbiao = yinbiao.replace(new RegExp(uyin[i], "gm"), ";" + uyin[i]+";");
+    }
 
     var nword=[];
     word=word.split(";");
@@ -100,27 +171,73 @@ class Content extends AppBase {
         nyinbiao.push(c);
       }
     }
+    //console.log(nyinbiao);
+    var yyin=["A","E","I","O","U"];
+    if (nword.length > nyinbiao.length){
+      for (var i = 0; i < nword.length;i++){
+        if (nword[i] == "E" && isNaN(parseInt(nyinbiao[i]))){
+          //console.log("?");
+          var a = nyinbiao.slice(0,i);
+          var b = nyinbiao.slice(i, nyinbiao.length);
+          var n = a.concat([nword[i]],b);
+          nyinbiao=n;
+        }
+      }
+    }
 
-    
-    console.log(nword);
-    console.log(nyinbiao);
+    var cyinbiao = [];
+    for (var c of nyinbiao) {
+      c = c.replace(new RegExp("s", "gm"), "19");
+      c = c.replace(new RegExp("t", "gm"), "20");
+      c = c.replace(new RegExp("v", "gm"), "21");
+      c = c.replace(new RegExp("ŋ", "gm"), "23");
+      c = c.replace(new RegExp("z", "gm"), "24");
+      c = c.replace(new RegExp("ʒ", "gm"), "26");
+      c = c.replace(new RegExp("ð", "gm"), "27");
+      c = c.replace(new RegExp("w", "gm"), "28");
+      c = c.replace(new RegExp("h", "gm"), "29");
+      if (c != "") {
+        cyinbiao.push(c);
+      }
+    }
+    nyinbiao=cyinbiao;
 
-    var uyin = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p"
-      , "q", "s", "t", "v", "x", "z"];
-    
+    if (nword.length != nyinbiao.length || item.word =="village")
+    {
+      console.log(item.word);
+      console.log(nword);
+      console.log(nyinbiao);
+    }
+
+    //return "";
+
     var res=[];
     for (var i = 0; i < nword.length;i++){
       //console.log(yinbiao[i]);
       var c = nword[i];
-      if(uyin.indexOf(c)>-1){
-        console.log(c);
-        res.push({f:"",c:c});
+      //console.log(c);
+      if (isNaN(parseInt(nyinbiao[i]))) {
+        c = c.toLowerCase();
+        //console.log(c);
+        if(c=="gh"){
+          res.push({ f: "BB", c: c });
+        } else if (c == "sch") {
+          res.push({ f: "", c: "s" });
+          res.push({ f: "BB", c: "ch" });
+        }else{
+
+          res.push({ f: "", c: c });
+        }
       }else{
         c=c.toLowerCase();
         if(nyinbiao[i]!=undefined&&parseInt(nyinbiao[i])>0){
           if (nyinbiao[i]=="1"){
             if(c=="oor"){
               res.push({ f: "CCC", c: "Oo;" });
+            }  else if (c == "ual") {
+              res.push({ f: "CCC", c: "[Gl" });
+            } else if (c == "ua") {
+              res.push({ f: "CCC", c: "[G" });
             } else {//our
               res.push({ f: "CCC", c: "Ou;" });
             }
@@ -147,7 +264,13 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: "OB" });
             }
           } else if (nyinbiao[i] == "5") {
-            res.push({ f: "CCC", c: "UB" });
+            if (c == "ay") {
+              res.push({ f: "CCC", c: "Ty" });
+            } else if (c == "ei") {
+              res.push({ f: "CCC", c: "UI" });
+            }  else {//ey
+              res.push({ f: "CCC", c: "UB" });
+            }
           } else if (nyinbiao[i] == "6") {
             if (c == "ou") {
               res.push({ f: "CCC", c: "$" });
@@ -188,7 +311,7 @@ class Content extends AppBase {
             }
           } else if (nyinbiao[i] == "12") {
             if (c == "u") {
-              res.push({ f: "CCC", c: "6;6" });
+              res.push({ f: "CCC", c: "Q" });
             } else if (c == "o") {
               res.push({ f: "CCC", c: "o" });//找不到
             } else {//w
@@ -201,18 +324,45 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: "O" });
             }
           } else if (nyinbiao[i] == "14") {
-            res.push({ f: "CCC", c: "~" });
+            if (c == "ea") {
+              res.push({ f: "CCC", c: "Ra" });
+            } if (c == "e") {
+              res.push({ f: "CCC", c: "R" });
+            } else {//ei
+              res.push({ f: "CCC", c: "~" });
+            }
+            
           } else if (nyinbiao[i] == "15") {
-            if (c == "i") {
-              res.push({ f: "CCC", c: "I" });
-            } else if (c == "o") {
-              res.push({ f: "CCC", c: "O" });
-            } else if (c == "u") {
-              res.push({ f: "CCC", c: "u" });//找不到
-            } else if (c == "e") {
-              res.push({ f: "CCC", c: "6" });
-            } else {//y
-              res.push({ f: "CCC", c: "B" });
+            //console.log("??");
+            if (zhongidx<=i){   
+              if (c == "i") {
+                res.push({ f: "CCC", c: "I" });
+              } else if (c == "o") {
+                res.push({ f: "CCC", c: "O" });
+              } else if (c == "u") {
+                res.push({ f: "CCC", c: "u" });//找不到
+              } else if (c == "e") {
+                res.push({ f: "CCC", c: "6" });
+              } else if (c == "a") {
+                res.push({ f: "CCC", c: "-" });
+              } else {//y
+                res.push({ f: "CCC", c: "B" });
+              }
+              zhongidx=100;
+            }else{
+              if (c == "i") {
+                res.push({ f: "CCC", c: "K" });
+              } else if (c == "o") {
+                res.push({ f: "CCC", c: "O" });
+              } else if (c == "u") {
+                res.push({ f: "CCC", c: "=" });//找不到
+              } else if (c == "e") {
+                res.push({ f: "CCC", c: "J" });
+              } else if (c == "a") {
+                res.push({ f: "CCC", c: "-" });
+              }  else {//y
+                res.push({ f: "CCC", c: "B" });
+              }
             }
           } else if (nyinbiao[i] == "16") {
             if (c == "e") {
@@ -229,6 +379,8 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: "G" });
             } else if (c == "e") {
               res.push({ f: "CCC", c: "F" });//找不到
+            } else if (c == "iou") {
+              res.push({ f: "CCC", c: "iSu" });//找不到
             } else if (c == "i") {
               res.push({ f: "CCC", c: "i" });//找不到
             } else if (c == "o") {
@@ -242,7 +394,84 @@ class Content extends AppBase {
             } else {//ar
               res.push({ f: "CCC", c: "*" });
             }
-          } else{
+          } else if (nyinbiao[i] == "3101") {
+            if (c == "ow") {
+              res.push({ f: "CCC", c: "Ww" });
+            }  else {//u
+              res.push({ f: "CCC", c: "W" });
+            }
+          } else if (nyinbiao[i] == "19") {
+            if (c == "c") {
+              res.push({ f: "B", c: c });
+            }else{
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "20") {
+            if (c == "d") {
+              res.push({ f: "B", c: c });
+            } else if (c == "ght") {
+              res.push({ f: "BB", c: "gh" });
+              res.push({ f: "", c: "t" });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "21") {
+            if (c == "f") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "22") {
+            if (c == "g") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "23") {
+            if (c == "n") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "24") {
+            if (c == "s") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "25") {
+            if (c == "x") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "26") {
+            if (c == "z") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "27") {
+            if (c == "th") {
+              res.push({ f: "B", c: c });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "28") {
+            if (c == "wh") {
+              res.push({ f: "", c: "w" });
+              res.push({ f: "BB", c: "h" });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "29") {
+            if (c == "wh") {
+              res.push({ f: "BB", c: "w" });
+              res.push({ f: "", c: "h" });
+            } else {
+              res.push({ f: "", c: c });
+            }
+          }      else{
             if (c == "a") {
               res.push({ f: "CCC", c: "T" });
             } else if (c == "e") {
@@ -264,7 +493,12 @@ class Content extends AppBase {
             }
           }
         } else {
-          res.push({ f: "", c: c });
+          if(c=="gh"){
+            res.push({ f: "BB", c: c });
+          }else{
+
+            res.push({ f: "", c: c });
+          }
         }
       }
       
