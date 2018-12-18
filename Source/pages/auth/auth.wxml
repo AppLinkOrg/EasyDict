@@ -12,6 +12,6 @@
     <view class='txt-gray h5 '>•  获得你的公开信息（昵称、头像等）</view>
   </view>
   <view class='margin-top'>
-    <button type='primary' class='h5 margin-top' open-type="getUserInfo" bindgetuserinfo="getUserInfo" >授权并登录</button>
+    <button type='primary' bindtap='tohome' class='h5 margin-top' open-type="getUserInfo" bindgetuserinfo="getUserInfo" >授权并登录</button>
   </view>
 </view>

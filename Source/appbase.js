@@ -14,7 +14,7 @@ export class AppBase {
   static UserInfo = {};
   static InstInfo = {};
   unicode = "yyc";
-  needauth = false;
+  needauth = true;
   pagetitle = null;
   app = null;
   options = null;
@@ -822,7 +822,7 @@ export class AppBase {
     var instinfo = this.Base.getMyData().instinfo;
     console.log(instinfo);
     wx.showActionSheet({
-      itemList: ["拨打热线", "添加客服"],
+      itemList: ["电话", "微信号"],
       success(e) {
         if (e.tapIndex == 0) {
           wx.makePhoneCall({
@@ -843,13 +843,15 @@ export class AppBase {
     var instinfo = this.Base.getMyData().instinfo;
     console.log(instinfo);
     wx.showActionSheet({
-      itemList: [instinfo.wechatno, "一键复制"],
+      itemList: ["拨打热线", "微信号: " + instinfo.wechat + "  复制"],
       success(e) {
         if (e.tapIndex == 0) {
-          
+          wx.makePhoneCall({
+            phoneNumber: instinfo.tel
+          })
         } else {
           wx.setClipboardData({
-            data: instinfo.wechatno,
+            data: instinfo.wechat,
           })
         }
       }

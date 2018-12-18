@@ -1,0 +1,48 @@
+/* pages/ceshi/ceshi.wxss */
+.commodity_screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.2;
+  overflow: hidden;
+  z-index: 1000;
+  color: green;
+}
+
+.commodity_attr_box {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 2000;
+  background: green;
+  padding-top: 20rpx;
+}
+.under{
+  position: fixed;
+  z-index:2;
+  width: 100%;
+  background: white;
+  height: 23%;
+  bottom: 0px;
+}
+.bg{
+  background: rgb(8, 8, 8);
+  opacity: 0.5;
+  position: fixed;
+  bottom:0px;
+  z-index: 1;
+  width: 100%;
+
+}
+
+.topclose{
+  position: fixed;
+  background: white;
+  z-index: 1;
+  width: 100%;
+}

@@ -2,6 +2,7 @@
 import { AppBase } from "../../appbase";
 import { ApiConfig } from "../../apis/apiconfig";
 import { InstApi } from "../../apis/inst.api.js";
+import { TranslateApi } from "../../apis/translate.api.js";
 
 class Content extends AppBase {
   constructor() {
@@ -14,6 +15,7 @@ class Content extends AppBase {
   }
   onMyShow() {
     var that = this;
+<<<<<<< HEAD
     var list=[];
    
     list.push({ word: "polite", yinbiao: "pə'laɪt" });
@@ -55,8 +57,45 @@ class Content extends AppBase {
     for (var i = 0; i < list.length; i++) {
       var res=this.calc(list[i]);
       list[i].res=res;
+=======
+    var instapi = new InstApi();
+    instapi.indexbanner({  }, (indexbanner) => {
+      this.Base.setMyData({ indexbanner });
+    });
+    // var list=[];
+  
+    // list.push({ word: "polite", yinbiao: "pə'laɪt" });
+    // list.push({ word: "clever", yinbiao: "klevə" });
+    // list.push({ word: "sometimes", yinbiao: "sʌmtaɪmz" });
+    // list.push({ word: "robot", yinbiao: "rəʊbɒt" });
+    // list.push({ word: "speak", yinbiao: "spiːk" });
+    // list.push({ word: "finish", yinbiao: "fɪnɪʃ" });
+    // list.push({ word: "Monday", yinbiao: "ˈmʌndeɪ" });
+    // list.push({ word: "Tuesday", yinbiao: "tjuːzdeɪ" });
+    // list.push({ word: "Wednesday", yinbiao: "ˈwenzdeɪ" });
+    // list.push({ word: "Thursday", yinbiao: "θɜːzdeɪ" });
+    // for (var i = 0; i < list.length; i++) {
+    //   var res=this.calc(list[i]);
+    //   list[i].res=res;
+    // }
+    //this.Base.setMyData({ list});
+  }
+  gotrans(e){
+    console.log(e);
+    var word=e.detail.value.word.trim();
+    if(word==""){
+      this.Base.toast("请输入中文或英文单词");
+      return;
+>>>>>>> b1e2d0db4bca040b6bf9e8580020740bcd0f71da
     }
-    this.Base.setMyData({ list});
+    var api=new TranslateApi();
+    api.trans({word},(wordresult)=>{
+      if (wordresult.ps!=""){
+        var item={word:wordresult.key,yinbiao:wordresult.ps};
+        wordresult["easy"] = this.calc(item);
+      }
+      this.Base.setMyData({wordresult});
+    });
   }
 
   calc(item){
@@ -69,11 +108,15 @@ class Content extends AppBase {
     word = word.replace(new RegExp("are", "gm"), ";ARE;");
     word = word.replace(new RegExp("air", "gm"), ";AIR;");
     word = word.replace(new RegExp("oor", "gm"), ";OOR;");
+<<<<<<< HEAD
     word = word.replace(new RegExp("our", "gm"), ";OUR;");
     word = word.replace(new RegExp("iou", "gm"), ";IOU;");
     word = word.replace(new RegExp("ual", "gm"), ";UAL;");
     word = word.replace(new RegExp("ay", "gm"), ";AY;");
     word = word.replace(new RegExp("ua", "gm"), ";UA;");
+=======
+    word = word.replace(new RegExp("OUR", "gm"), ";OUR;");
+>>>>>>> b1e2d0db4bca040b6bf9e8580020740bcd0f71da
     word = word.replace(new RegExp("ea", "gm"), ";EA;");
     word = word.replace(new RegExp("er", "gm"), ";ER;");
     word = word.replace(new RegExp("ar", "gm"), ";AR;");
@@ -116,6 +159,8 @@ class Content extends AppBase {
     var zhongidx = yinbiao.indexOf("'"); 
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":");
+    yinbiao = yinbiao.replace("(", "");
+    yinbiao = yinbiao.replace(")", "");
 
     yinbiao = yinbiao.replace(new RegExp("ʊə", "gm"), ";1;");
     yinbiao = yinbiao.replace(new RegExp("eə", "gm"), ";2;");
@@ -324,6 +369,7 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: "O" });
             }
           } else if (nyinbiao[i] == "14") {
+<<<<<<< HEAD
             if (c == "ea") {
               res.push({ f: "CCC", c: "Ra" });
             } if (c == "e") {
@@ -332,6 +378,13 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: "~" });
             }
             
+=======
+            if(c=="ea"){
+              res.push({ f: "CCC", c: "Ra" });
+            }else{
+              res.push({ f: "CCC", c: "~" });
+            }
+>>>>>>> b1e2d0db4bca040b6bf9e8580020740bcd0f71da
           } else if (nyinbiao[i] == "15") {
             //console.log("??");
             if (zhongidx<=i){   
@@ -505,8 +558,21 @@ class Content extends AppBase {
     }
     return res;
   }
+  listen(e){
+    wx.showToast({
+      title: '你听到了',
+      icon:'none'
+    })
+  }
 
-
+  toauth(e){
+   wx.navigateTo({
+     url: '/pages/auth/auth',
+     success: function(res) {},
+     fail: function(res) {},
+     complete: function(res) {},
+   })
+  }
 }
 var content = new Content();
 var body = content.generateBodyJson();
@@ -514,4 +580,7 @@ body.onLoad = content.onLoad;
 body.onMyShow = content.onMyShow; 
 body.calc = content.calc;
 body.insert_flg = content.insert_flg;
+body.listen = content.listen; 
+body.toauth = content.toauth;
+body.gotrans = content.gotrans;
 Page(body)
