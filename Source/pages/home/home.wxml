@@ -41,10 +41,14 @@
     <block wx:if='{{wordresult.acceptation.length>0}}'>
       <view style='' class=' mid margin-top-80'  wx:if="{{wordresult.ps!=''}}">
         <view class='padding-20 txt-black txt-bold'>简易音标</view>
-        <view class='flex-row flex-column '>
-          <view class='text-center h2 txt-black txt-bold' style='margin-bottom:70rpx;margin-top:30rpx;'><text wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='h4 {{cs.f}}'>{{cs.c}}</text>
+        <view class='flex-row flex-center '>
+          <view class='flex-1'></view>
+          <view class='text-center h2 txt-black ' style='margin-bottom:70rpx;'><text wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='h1 {{cs.f}}'>{{cs.c}}</text>
+          </view>
+          <view>
             <image bindtap='listen' class='icon margin-left' src='{{uploadpath}}resource/{{res.laba}}' ></image>
           </view>
+          <view class='flex-1'></view>
         </view>
       </view>
 

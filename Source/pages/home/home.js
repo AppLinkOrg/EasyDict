@@ -83,8 +83,9 @@ class Content extends AppBase {
     word = word.replace(new RegExp("Y", "gm"), ";Y;");
     word = word.replace(new RegExp("w", "gm"), ";W;");
     
-    var yinbiao = item.yinbiao.toLowerCase();
+    var yinbiao = item.yinbiao.toLowerCase(); 
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
+    yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":");
     yinbiao = yinbiao.replace("(", "");
     yinbiao = yinbiao.replace(")", "");
@@ -222,7 +223,7 @@ class Content extends AppBase {
             if (c == "u") {
               res.push({ f: "CCC", c: "u" });//找不到
             } else {//o
-              res.push({ f: "CCC", c: "O" });
+              res.push({ f: "CCC", c: "}" });
             }
           } else if (nyinbiao[i] == "14") {
             if(c=="ea"){
