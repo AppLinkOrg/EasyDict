@@ -39,16 +39,43 @@ class Content extends AppBase {
   }
   gotrans(e){
     console.log(e);
-    var word=e.detail.value.word.trim();
+    var word="";
+    try{
+      word = e.detail.value.word.trim();
+    }catch(ex){
+
+    }
+    try{
+      var k=e.currentTarget.dataset.word;
+      if(k!=undefined){
+        word=k;
+      }
+    }catch(ex){
+
+    }
     if(word==""){
       this.Base.toast("请输入中文或英文单词");
       return;
     }
     var api=new TranslateApi();
     api.trans({word},(wordresult)=>{
-      if (wordresult.ps!=""){
-        var item={word:wordresult.key,yinbiao:wordresult.ps};
-        wordresult["easy"] = this.calc(item);
+      if(wordresult.keytype=="0"){
+
+        if (wordresult.ps != "") {
+          var item = { word: wordresult.key, yinbiao: wordresult.ps };
+          wordresult["easy"] = this.calc(item);
+        }
+      }else{
+        for (var i = 0; i < wordresult.detail.length;i++){
+          for (var j = 0; j < wordresult.detail[i].parts.length; j++) {
+            for (var k = 0; k < wordresult.detail[i].parts[j].means.length; k++) {
+              if (wordresult.detail[i].parts[j].means[k].trans.ps != "") {
+                var item = { word: wordresult.detail[i].parts[j].means[k].trans.key, yinbiao: wordresult.detail[i].parts[j].means[k].trans.ps };
+                wordresult.detail[i].parts[j].means[k].trans.easy = this.calc(item);
+              }
+            }
+          }
+        }
       }
       this.Base.setMyData({wordresult});
     });
@@ -113,6 +140,7 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":");
+    yinbiao = yinbiao.replace(new RegExp(" ", "gm"), " ");
     yinbiao = yinbiao.replace("(", "");
     yinbiao = yinbiao.replace(")", "");
 
@@ -125,7 +153,9 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("aɪ", "gm"), ";15;");
     yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("əʊ", "gm"), ";3101;");
-    yinbiao = yinbiao.replace(new RegExp("ər", "gm"), ";3102;"); 
+    yinbiao = yinbiao.replace(new RegExp("ər", "gm"), ";3102;");
+    yinbiao = yinbiao.replace(new RegExp("ə:", "gm"), ";3103;");
+    yinbiao = yinbiao.replace(new RegExp("ei", "gm"), ";5;"); 
     yinbiao = yinbiao.replace(new RegExp("ɜ:", "gm"), ";7;");
     yinbiao = yinbiao.replace(new RegExp("ɛ", "gm"), ";;"); //没有对应
     yinbiao = yinbiao.replace(new RegExp("ʌ", "gm"), ";8;");
@@ -205,10 +235,10 @@ class Content extends AppBase {
 
     if (nword.length != nyinbiao.length || item.word =="village")
     {
-      console.log(item.word);
-      console.log(nword);
-      console.log(nyinbiao);
     }
+    console.log(item.word);
+    console.log(nword);
+    console.log(nyinbiao);
 
     //return "";
 
@@ -325,6 +355,8 @@ class Content extends AppBase {
           } else if (nyinbiao[i] == "13") {
             if (c == "u") {
               res.push({ f: "CCC", c: "u" });//找不到
+            } if (c == "oo") {
+              res.push({ f: "CCC", c: "}o" });//找不到
             } else {//o
               res.push({ f: "CCC", c: "}" });
             }
@@ -407,6 +439,12 @@ class Content extends AppBase {
           } else if (nyinbiao[i] == "3102") {
             if (c == "or") {
               res.push({ f: "CCC", c: "L" });
+            } else {//u
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "3103") {
+            if (c == "ur") {
+              res.push({ f: "CCC", c: "<" });
             } else {//u
               res.push({ f: "", c: c });
             }
@@ -516,9 +554,17 @@ class Content extends AppBase {
     return res;
   }
   listen(e){
-    wx.showToast({
-      title: '你听到了',
-      icon:'none'
+    var src=e.currentTarget.dataset.src;
+    console.log(src);
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = src;
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
     })
   }
 
