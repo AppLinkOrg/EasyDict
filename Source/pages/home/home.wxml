@@ -40,27 +40,28 @@
   <block wx:if="{{wordresult!=undefined}}">
 
     <block wx:if="{{wordresult.keytype=='1'}}">
-        <view wx:for="{{wordresult.detail}}" wx:key="k1" wx:for-item="k1" class='padding'>
-          <view class='h5'>中文发音</view>
-          <view class='h5'>/ {{k1.word_symbol}} /</view>
-          <view class='h5'>词典翻译</view>
-          <block wx:for="{{k1.parts}}" wx:key="k2"  wx:for-item="k2">
+      <view wx:for="{{wordresult.detail}}" wx:key="k1" wx:for-item="k1" class='padding'>
+        <view class='txt-black txt-bold'>中文发音</view>
+        <view class='margin-top-20'>/ {{k1.word_symbol}} /</view>
+        <view class='txt-black txt-bold margin-top-20'>词典翻译</view>
+        <block wx:for="{{k1.parts}}" wx:key="k2" wx:for-item="k2">
           <block wx:for="{{k2.means}}" wx:key="k3" wx:for-item="k3">
-          <view class='flex-row margin-top' >
-            <view>
-            <image bindtap='listen' data-src="{{k3.trans.pron}}" class='icon margin-left' src='{{uploadpath}}resource/{{res.laba}}'></image></view>
-            <view class='margin-left flex-1'>
-              <view class='txt-primary' bindtap='gotrans' data-word="{{k3.trans.key}}">
-                  <text wx:for="{{k3.trans.easy}}" wx:key="k2" wx:for-item="cs" class='h4 txt-primary {{cs.f}}'>{{cs.c}}</text>
+            <view class='flex-row margin-top'>
+              <view class=''>
+                <image bindtap='listen' data-src="{{k3.trans.pron}}" class='icon ' src='{{uploadpath}}resource/{{res.laba}}'></image>
               </view>
-              <view wx:for="{{k3.trans.pos}}" wx:key="k2" wx:for-item="c3" wx:for-index='idc' class='txt-gray h6'>
-                {{c3}} {{k3.trans.acceptation[idc]}}
+              <view class='margin-left flex-1'>
+                <view class='txt-primary' bindtap='gotrans' data-word="{{k3.trans.key}}">
+                  <text wx:for="{{k3.trans.easy}}" wx:key="k2" wx:for-item="cs" class='h4 txt-primary {{cs.f}}'>{{cs.c}}</text>
+                </view>
+                <view wx:for="{{k3.trans.pos}}" wx:key="k2" wx:for-item="c3" wx:for-index='idc' class='txt-gray h6'>
+                  {{c3}} {{k3.trans.acceptation[idc]}}
+                </view>
               </view>
             </view>
-          </view>
           </block>
-          </block>
-        </view>
+        </block>
+      </view>
 
     </block>
     <block wx:if="{{wordresult.keytype=='0'}}">
@@ -74,14 +75,17 @@
       <block wx:if='{{wordresult.acceptation.length>0}}'>
         <view style='' class=' mid margin-top-80' wx:if="{{wordresult.ps!=''}}">
           <view class='padding-20 txt-black txt-bold'>简易音标</view>
+
           <view class='flex-row flex-center '>
             <view class='flex-1'></view>
-            <view class='text-center h2 txt-black ' style='margin-bottom:70rpx;'>
-              <text wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='h1 {{cs.f}}'>{{cs.c}}</text>
+            <view class='text-center h2 txt-black ' style='margin-bottom:70rpx;width:60%;'>
+              <text style='' wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='h1 {{cs.f}}'>{{cs.c}}</text>
             </view>
-            <view>
-              <image bindtap='listen' class='icon margin-left' src='{{uploadpath}}resource/{{res.laba}}' data-src="{{wordresult.pron}}"></image>
+
+            <view class='icon_laba'>
+              <image bindtap='listen' class='icon ' src='{{uploadpath}}resource/{{res.laba}}' data-src="{{wordresult.pron}}"></image>
             </view>
+
             <view class='flex-1'></view>
           </view>
         </view>

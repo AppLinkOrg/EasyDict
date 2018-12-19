@@ -37,3 +37,7 @@ Page{
   
   border-bottom: 1rpx solid #cfcecf;
 }
+.icon_laba{
+  position: absolute;
+  right: 80rpx;
+}
