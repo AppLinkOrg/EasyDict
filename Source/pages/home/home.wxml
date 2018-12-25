@@ -12,10 +12,10 @@
 <view>
 
   <swiper indicator-dots='true' autoplay='false' interval='3000' duration='500' circular='true' style='width:750rpx;height:350rpx;'>
-    <swiper-item wx:for="{{indexbanner}}" wx:key="k">
+    <swiper-item wx:for="{{indexbanner}}" wx:key="k" >
       <view>
         <!-- mode="aspectFill" -->
-        <image src='{{uploadpath}}indexbanner/{{item.img}}' bindtap='viewPhoto' id='{{uploadpath}}indexbanner/{{item.img}}' style='width:750rpx;height:350rpx;'></image>
+        <image src='{{uploadpath}}indexbanner/{{item.img}}' id='{{item.appid}}' bindtap='toother'  style='width:750rpx;height:350rpx;'></image>
       </view>
     </swiper-item>
   </swiper>

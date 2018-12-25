@@ -51,6 +51,22 @@ class Content extends AppBase {
       open: 1
     })
   }
+  toother(e){
+    
+    var id = e.currentTarget.id;
+    console.log(id+"aaaaaaaaaaaaaaaa")
+    wx.navigateToMiniProgram({
+      appId: id,
+      path: 'pages/home/home',
+      extraData: {
+        foo: 'bar'
+      },
+      envVersion: 'trial',
+      success(res) {
+        // 打开成功
+      }
+    })
+  }
   gotrans(e){
     console.log(e);
     var word="";
@@ -605,5 +621,6 @@ body.listen = content.listen;
 body.toauth = content.toauth;
 body.gotrans = content.gotrans;
 body.btnopendetails = content.btnopendetails;
-body.bindclosedetails = content.bindclosedetails;
+body.bindclosedetails = content.bindclosedetails; 
+body.toother = content.toother; 
 Page(body)
