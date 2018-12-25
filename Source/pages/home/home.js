@@ -12,6 +12,7 @@ class Content extends AppBase {
     this.Base.Page = this;
     //options.id=5;
     super.onLoad(options);
+    this.Base.setMyData({ open: 2})
   }
   onMyShow() {
     var that = this;
@@ -36,6 +37,19 @@ class Content extends AppBase {
     //   list[i].res=res;
     // }
     //this.Base.setMyData({ list});
+  }
+
+  bindclosedetails(e) {
+    var that = this;
+    this.Base.setMyData({
+      open: 2
+    })
+
+  }
+  btnopendetails() {
+    this.Base.setMyData({
+      open: 1
+    })
   }
   gotrans(e){
     console.log(e);
@@ -590,4 +604,6 @@ body.insert_flg = content.insert_flg;
 body.listen = content.listen; 
 body.toauth = content.toauth;
 body.gotrans = content.gotrans;
+body.btnopendetails = content.btnopendetails;
+body.bindclosedetails = content.bindclosedetails;
 Page(body)

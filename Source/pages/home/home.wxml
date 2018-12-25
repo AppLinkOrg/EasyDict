@@ -69,7 +69,7 @@
 
       <view class='text-center flex-row flex-column margin-top-80' wx:if='{{wordresult.acceptation==undefined||wordresult.acceptation.length==0}}'>
         <image class='margin-left-40 img' src='{{uploadpath}}resource/{{res.notyet}}'></image>
-        <view class='h5 margin-top-20'>暂无收录,请点击联系客服添加</view>
+        <navigator class='h5 margin-top-20 txt-primary ' bindtap='btnopendetails'>暂无收录,请点击联系客服添加</navigator>
       </view>
 
       <block wx:if='{{wordresult.acceptation.length>0}}'>
@@ -125,4 +125,32 @@
       </block>
     </block>
   </block>
+</view>
+
+
+
+
+<view class='' animation='{{animationData}}' hidden='{{open!=1}}'>
+  <view class='bg' bindtap='bindclosedetails' style='height:100%'>
+    <view class='' style=''></view>
+  </view>
+  <view class='under'>
+  
+  <view class=' flex-row flex-column' >
+    <view class='flex-row flex-center padding-20' bindtap='phoneCall' id='{{instinfo.tel}}'>
+      <view class='txt-black text-center h4-5'>电话：</view>
+      <view class='txt-green h4-5'>{{instinfo.tel}}</view>
+    </view>
+
+    <view class='flex-row flex-center margin-20 text-center'>
+      <view class='txt-black h4-5'>微信号：</view>
+      <view class='txt-black h4-5'>{{instinfo.wechat}}</view>
+      <view class='txt-primary margin-left-40 h4-5' bindtap='binddobut'>复制</view>
+    </view>
+
+    <view class='margin-top-20' style='height:4rpx;background:#CECFCE;width:100%'></view>
+    
+  </view>
+  <view  bindtap='bindclosedetails' class='margin-top-20  text-center h4-5' style='width:100%'>取消</view>
+  </view>
 </view>

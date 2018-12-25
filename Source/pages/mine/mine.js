@@ -19,12 +19,14 @@ class Content extends AppBase {
       open: 2
     })
   }
+
   onMyShow() {
     var that = this;
     wx.setNavigationBarTitle({
       title: "我的",
     })
   }
+
   binddobut() {
     var wechat = this.Base.getMyData().instinfo.wechat;
     wx.setClipboardData({
@@ -50,24 +52,6 @@ class Content extends AppBase {
       open: 2
     })
 
-     var animation = wx.createAnimation({
-       duration: 600,
-       timingFunction: "linear",
-       delay: 0
-     })
-
-     this.animation = animation
-    animation.translateY(300).step()
-    // this.Base.setMyData({
-    //   animationData: animation.export(),
-    //   showModalStatus: true
-    // })
-    // setTimeout(function() {
-    //   animation.translateY(0).step()
-    //   this.setData({
-    //     animationData: animation.export()
-    //   })
-    // }.bind(this), 200)
   }
   btnopendetails() {
     this.Base.setMyData({
