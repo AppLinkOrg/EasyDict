@@ -58,10 +58,12 @@ class Content extends AppBase {
       return;
     }
     var api=new TranslateApi();
-    api.trans({word},(wordresult)=>{
+    api.trans({ word }, (wordresult) => {
+      console.log("wordresult");
+      console.log(wordresult);
       if(wordresult.keytype=="0"){
 
-        if (wordresult.ps != "") {
+        if (wordresult.ps != ""&&wordresult.easy==undefined) {
           var item = { word: wordresult.key, yinbiao: wordresult.ps };
           wordresult["easy"] = this.calc(item);
         }
@@ -165,6 +167,7 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("u:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("ʊ", "gm"), ";13;");
     yinbiao = yinbiao.replace(new RegExp("i:", "gm"), ";14;");
+    yinbiao = yinbiao.replace(new RegExp("i", "gm"), ";15;");
     yinbiao = yinbiao.replace(new RegExp("ɪ", "gm"), ";15;");
     yinbiao = yinbiao.replace(new RegExp("e", "gm"), ";16;");
     yinbiao = yinbiao.replace(new RegExp("a:", "gm"), ";17;");
@@ -355,7 +358,7 @@ class Content extends AppBase {
           } else if (nyinbiao[i] == "13") {
             if (c == "u") {
               res.push({ f: "CCC", c: "u" });//找不到
-            } if (c == "oo") {
+            }else if (c == "oo") {
               res.push({ f: "CCC", c: "}o" });//找不到
             } else {//o
               res.push({ f: "CCC", c: "}" });
@@ -363,7 +366,7 @@ class Content extends AppBase {
           } else if (nyinbiao[i] == "14") {
             if (c == "ea") {
               res.push({ f: "CCC", c: "Ra" });
-            } if (c == "e") {
+            }else if (c == "e") {
               res.push({ f: "CCC", c: "R" });
             } else {//ei
               res.push({ f: "CCC", c: "~" });
@@ -397,6 +400,7 @@ class Content extends AppBase {
               } else if (c == "a") {
                 res.push({ f: "CCC", c: "-" });
               }  else {//y
+              
                 res.push({ f: "CCC", c: "B" });
               }
             }
