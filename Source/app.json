@@ -33,5 +33,7 @@
       }
       
     ]
-  }
+  },
+  "debug": true,
+  "navigateToMiniProgramAppIdList": ["wx00b8a1d62c3df2e7"]
 }

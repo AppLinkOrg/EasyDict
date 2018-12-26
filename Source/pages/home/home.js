@@ -1,8 +1,16 @@
 // pages/content/content.js
-import { AppBase } from "../../appbase";
-import { ApiConfig } from "../../apis/apiconfig";
-import { InstApi } from "../../apis/inst.api.js";
-import { TranslateApi } from "../../apis/translate.api.js";
+import {
+  AppBase
+} from "../../appbase";
+import {
+  ApiConfig
+} from "../../apis/apiconfig";
+import {
+  InstApi
+} from "../../apis/inst.api.js";
+import {
+  TranslateApi
+} from "../../apis/translate.api.js";
 
 class Content extends AppBase {
   constructor() {
@@ -12,15 +20,20 @@ class Content extends AppBase {
     this.Base.Page = this;
     //options.id=5;
     super.onLoad(options);
+    this.Base.setMyData({
+      open: 2
+    })
   }
   onMyShow() {
     var that = this;
     var instapi = new InstApi();
-    instapi.indexbanner({  }, (indexbanner) => {
-      this.Base.setMyData({ indexbanner });
+    instapi.indexbanner({}, (indexbanner) => {
+      this.Base.setMyData({
+        indexbanner
+      });
     });
     // var list=[];
-  
+
     // list.push({ word: "polite", yinbiao: "pə'laɪt" });
     // list.push({ word: "clever", yinbiao: "klevə" });
     // list.push({ word: "sometimes", yinbiao: "sʌmtaɪmz" });
@@ -37,12 +50,48 @@ class Content extends AppBase {
     // }
     //this.Base.setMyData({ list});
   }
-  gotrans(e){
+
+  bindclosedetails(e) {
+    var that = this;
+    this.Base.setMyData({
+      open: 2
+    })
+
+  }
+  btnopendetails() {
+    this.Base.setMyData({
+      open: 1
+    })
+  }
+  toother(e) {
+    var indexbanner = this.Base.getMyData().indexbanner;
+    var id = e.currentTarget.id;
+    var img = e.currentTarget.dataset.img;
+      if (id!= "") {
+      wx.navigateToMiniProgram({
+        appId: id,
+        path: '',
+        extraData: {
+          foo: 'bar'
+        },
+        envVersion: 'release',
+        success(res) {
+        }
+      })
+      }else{
+         wx.previewImage({
+           urls: [img],
+         })
+      }
+  }
+    
+  
+  gotrans(e) {
     console.log(e);
-    var word="";
-    try{
+    var word = "";
+    try {
       word = e.detail.value.word.trim();
-    }catch(ex){
+    } catch (ex) {
 
     }
     try{
@@ -51,25 +100,27 @@ class Content extends AppBase {
         this.Base.setMyData({ searchword:k});
         word=k;
       }
-    }catch(ex){
+    } catch (ex) {
 
     }
-    if(word==""){
+    if (word == "") {
       this.Base.toast("请输入中文或英文单词");
       return;
     }
-    var api=new TranslateApi();
-    api.trans({ word }, (wordresult) => {
+    var api = new TranslateApi();
+    api.trans({
+      word
+    }, (wordresult) => {
       console.log("wordresult");
       console.log(wordresult);
-      if(wordresult.keytype=="0"){
+      if (wordresult.keytype == "0") {
 
         if (wordresult.ps != undefined&&wordresult.easy==undefined) {
           var item = { word: wordresult.key, yinbiao: wordresult.ps };
           wordresult["easy"] = this.calc(item);
         }
-      }else{
-        for (var i = 0; i < wordresult.detail.length;i++){
+      } else {
+        for (var i = 0; i < wordresult.detail.length; i++) {
           for (var j = 0; j < wordresult.detail[i].parts.length; j++) {
             for (var k = 0; k < wordresult.detail[i].parts[j].means.length; k++) {
               if (wordresult.detail[i].parts[j].means[k].trans != null && wordresult.detail[i].parts[j].means[k].trans.ps != undefined && wordresult.detail[i].parts[j].means[k].trans.easy == undefined) {
@@ -80,11 +131,13 @@ class Content extends AppBase {
           }
         }
       }
-      this.Base.setMyData({wordresult});
+      this.Base.setMyData({
+        wordresult
+      });
     });
   }
 
-  calc(item){
+  calc(item) {
     var word = item.word.toLowerCase();
     word = word.replace(new RegExp("sch", "gm"), ";SCH;");
     word = word.replace(new RegExp("ght", "gm"), ";GHT;");
@@ -138,10 +191,10 @@ class Content extends AppBase {
     word = word.replace(new RegExp("y", "gm"), ";Y;");
     word = word.replace(new RegExp("w", "gm"), ";W;");
     //console.log(word);
-    
-    var yinbiao = item.yinbiao.toLowerCase(); 
+
+    var yinbiao = item.yinbiao.toLowerCase();
     yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "'");
-    var zhongidx = yinbiao.indexOf("'"); 
+    var zhongidx = yinbiao.indexOf("'");
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":"); 
@@ -183,30 +236,29 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("a", "gm"), ";;");
     yinbiao = yinbiao.replace(new RegExp("gz", "gm"), ";25;");
     yinbiao = yinbiao.replace(new RegExp("dʒ", "gm"), ";22;");
-    yinbiao = yinbiao.replace(new RegExp("sk", "gm"), ";SK;"); 
-    yinbiao = yinbiao.replace(new RegExp("ʃ", "gm"), ";SH;"); 
-
-    
+    yinbiao = yinbiao.replace(new RegExp("sk", "gm"), ";SK;");
+    yinbiao = yinbiao.replace(new RegExp("ʃ", "gm"), ";SH;");
 
 
-    var uyin = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p"
-      , "q", "s", "t", "v", "x", "z"];
+
+
+    var uyin = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "s", "t", "v", "x", "z"];
 
     for (var i = 0; i < uyin.length; i++) {
       word = word.replace(new RegExp(uyin[i], "gm"), ";" + uyin[i] + ";");
     }
-    for(var i=0;i<uyin.length;i++){
-      yinbiao = yinbiao.replace(new RegExp(uyin[i], "gm"), ";" + uyin[i]+";");
+    for (var i = 0; i < uyin.length; i++) {
+      yinbiao = yinbiao.replace(new RegExp(uyin[i], "gm"), ";" + uyin[i] + ";");
     }
 
-    var nword=[];
-    word=word.split(";");
-    for(var c of word){
-      if(c!=""){
+    var nword = [];
+    word = word.split(";");
+    for (var c of word) {
+      if (c != "") {
         nword.push(c);
       }
     }
-    var nyinbiao=[];
+    var nyinbiao = [];
     yinbiao = yinbiao.split(";");
     for (var c of yinbiao) {
       if (c != "") {
@@ -214,15 +266,15 @@ class Content extends AppBase {
       }
     }
     //console.log(nyinbiao);
-    var yyin=["A","E","I","O","U"];
-    if (nword.length > nyinbiao.length){
-      for (var i = 0; i < nword.length;i++){
-        if (nword[i] == "E" && isNaN(parseInt(nyinbiao[i]))){
+    var yyin = ["A", "E", "I", "O", "U"];
+    if (nword.length > nyinbiao.length) {
+      for (var i = 0; i < nword.length; i++) {
+        if (nword[i] == "E" && isNaN(parseInt(nyinbiao[i]))) {
           //console.log("?");
-          var a = nyinbiao.slice(0,i);
+          var a = nyinbiao.slice(0, i);
           var b = nyinbiao.slice(i, nyinbiao.length);
-          var n = a.concat([nword[i]],b);
-          nyinbiao=n;
+          var n = a.concat([nword[i]], b);
+          nyinbiao = n;
         }
       }
     }
@@ -242,27 +294,28 @@ class Content extends AppBase {
         cyinbiao.push(c);
       }
     }
-    nyinbiao=cyinbiao;
+    nyinbiao = cyinbiao;
 
-    if (nword.length != nyinbiao.length || item.word =="village")
-    {
-    }
+    if (nword.length != nyinbiao.length || item.word == "village") {}
     console.log(item.word);
     console.log(nword);
     console.log(nyinbiao);
 
     //return "";
 
-    var res=[];
-    for (var i = 0; i < nword.length;i++){
+    var res = [];
+    for (var i = 0; i < nword.length; i++) {
       //console.log(yinbiao[i]);
       var c = nword[i];
       //console.log(c);
       if (isNaN(parseInt(nyinbiao[i]))) {
         c = c.toLowerCase();
         //console.log(c);
-        if(c=="gh"){
-          res.push({ f: "BB", c: c });
+        if (c == "gh") {
+          res.push({
+            f: "BB",
+            c: c
+          });
         } else if (c == "sch") {
           res.push({ f: "", c: "s" });
           res.push({ f: "BB", c: "ch" });
@@ -270,77 +323,155 @@ class Content extends AppBase {
           
           res.push({ f: "", c: c });
         }
-      }else{
-        c=c.toLowerCase();
-        if(nyinbiao[i]!=undefined&&parseInt(nyinbiao[i])>0){
-          if (nyinbiao[i]=="1"){
-            if(c=="oor"){
-              res.push({ f: "CCC", c: "Oo;" });
-            }  else if (c == "ual") {
-              res.push({ f: "CCC", c: "[Gl" });
+      } else {
+        c = c.toLowerCase();
+        if (nyinbiao[i] != undefined && parseInt(nyinbiao[i]) > 0) {
+          if (nyinbiao[i] == "1") {
+            if (c == "oor") {
+              res.push({
+                f: "CCC",
+                c: "Oo;"
+              });
+            } else if (c == "ual") {
+              res.push({
+                f: "CCC",
+                c: "[Gl"
+              });
             } else if (c == "ua") {
-              res.push({ f: "CCC", c: "[G" });
-            } else {//our
-              res.push({ f: "CCC", c: "Ou;" });
+              res.push({
+                f: "CCC",
+                c: "[G"
+              });
+            } else { //our
+              res.push({
+                f: "CCC",
+                c: "Ou;"
+              });
             }
           } else if (nyinbiao[i] == "2") {
             if (c == "are") {
-              res.push({ f: "CCC", c: "Z;U" });
+              res.push({
+                f: "CCC",
+                c: "Z;U"
+              });
             } else if (c == "ear") {
-              res.push({ f: "CCC", c: "UZ;" });
-            } else {//air
-              res.push({ f: "CCC", c: "Zi;" });
+              res.push({
+                f: "CCC",
+                c: "UZ;"
+              });
+            } else { //air
+              res.push({
+                f: "CCC",
+                c: "Zi;"
+              });
             }
           } else if (nyinbiao[i] == "3") {
             if (c == "ere") {
-              res.push({ f: "CCC", c: "6;6" });
+              res.push({
+                f: "CCC",
+                c: "6;6"
+              });
             } else if (c == "ear") {
-              res.push({ f: "CCC", c: "6a;" });
-            } else {//eer
-              res.push({ f: "CCC", c: "6e;" });
+              res.push({
+                f: "CCC",
+                c: "6a;"
+              });
+            } else { //eer
+              res.push({
+                f: "CCC",
+                c: "6e;"
+              });
             }
           } else if (nyinbiao[i] == "4") {
             if (c == "oi") {
-              res.push({ f: "CCC", c: "OI" });
-            } else {//oy
-              res.push({ f: "CCC", c: "OB" });
+              res.push({
+                f: "CCC",
+                c: "OI"
+              });
+            } else { //oy
+              res.push({
+                f: "CCC",
+                c: "OB"
+              });
             }
           } else if (nyinbiao[i] == "5") {
             if (c == "ay") {
-              res.push({ f: "CCC", c: "Ty" });
+              res.push({
+                f: "CCC",
+                c: "Ty"
+              });
             } else if (c == "a") {
-              res.push({ f: "CCC", c: "T" });
+              res.push({
+                f: "CCC",
+                c: "T"
+              });
             } else if (c == "ei") {
-              res.push({ f: "CCC", c: "UI" });
-            }  else {//ey
-              res.push({ f: "CCC", c: "UB" });
+              res.push({
+                f: "CCC",
+                c: "UI"
+              });
+            } else { //ey
+              res.push({
+                f: "CCC",
+                c: "UB"
+              });
             }
           } else if (nyinbiao[i] == "6") {
             if (c == "ou") {
-              res.push({ f: "CCC", c: "$" });
-            } else {//ow
-              res.push({ f: "CCC", c: "%" });
+              res.push({
+                f: "CCC",
+                c: "$"
+              });
+            } else { //ow
+              res.push({
+                f: "CCC",
+                c: "%"
+              });
             }
           } else if (nyinbiao[i] == "7") {
             if (c == "er") {
-              res.push({ f: "CCC", c: "N" });
+              res.push({
+                f: "CCC",
+                c: "N"
+              });
             } else if (c == "ir") {
-              res.push({ f: "CCC", c: "M" });
+              res.push({
+                f: "CCC",
+                c: "M"
+              });
             } else if (c == "ur") {
-              res.push({ f: "CCC", c: "<" });
+              res.push({
+                f: "CCC",
+                c: "<"
+              });
             } else if (c == "or") {
-              res.push({ f: "CCC", c: ">" });
-            } else {//ar
-              res.push({ f: "CCC", c: "ar" });//找不到
+              res.push({
+                f: "CCC",
+                c: ">"
+              });
+            } else { //ar
+              res.push({
+                f: "CCC",
+                c: "ar"
+              }); //找不到
             }
           } else if (nyinbiao[i] == "8") {
             if (c == "u") {
-              res.push({ f: "CCC", c: "P" });
-            } else {//o
-              res.push({ f: "CCC", c: ":" });
+              res.push({
+                f: "CCC",
+                c: "P"
+              });
+            } else { //o
+              res.push({
+                f: "CCC",
+                c: ":"
+              });
             }
           } else if (nyinbiao[i] == "9") {
-            res.push({ f: "CCC", c: "Y" });
+            res.push({
+              f: "CCC",
+              c: "Y"
+            });
           } else if (nyinbiao[i] == "10") {
             if (c == "o") {
               res.push({ f: "CCC", c: "8" });
@@ -351,94 +482,196 @@ class Content extends AppBase {
             }
           } else if (nyinbiao[i] == "11") {
             if (c == "o") {
-              res.push({ f: "CCC", c: "!" });
-            } else {//a
-              res.push({ f: "CCC", c: "^" });
+              res.push({
+                f: "CCC",
+                c: "!"
+              });
+            } else { //a
+              res.push({
+                f: "CCC",
+                c: "^"
+              });
             }
           } else if (nyinbiao[i] == "12") {
             if (c == "u") {
-              res.push({ f: "CCC", c: "Q" });
+              res.push({
+                f: "CCC",
+                c: "Q"
+              });
             } else if (c == "oo") {
-              res.push({ f: "CCC", c: "'o" });//找不到
+              res.push({
+                f: "CCC",
+                c: "'o"
+              }); //找不到
             } else if (c == "o") {
-              res.push({ f: "CCC", c: "o" });//找不到
-            } else {//w
-              res.push({ f: "CCC", c: "," });
+              res.push({
+                f: "CCC",
+                c: "o"
+              }); //找不到
+            } else { //w
+              res.push({
+                f: "CCC",
+                c: ","
+              });
             }
           } else if (nyinbiao[i] == "13") {
             if (c == "u") {
-              res.push({ f: "CCC", c: "u" });//找不到
-            }else if (c == "oo") {
-              res.push({ f: "CCC", c: "}o" });//找不到
-            } else {//o
-              res.push({ f: "CCC", c: "}" });
+              res.push({
+                f: "CCC",
+                c: "u"
+              }); //找不到
+            } else if (c == "oo") {
+              res.push({
+                f: "CCC",
+                c: "}o"
+              }); //找不到
+            } else { //o
+              res.push({
+                f: "CCC",
+                c: "}"
+              });
             }
           } else if (nyinbiao[i] == "14") {
             if (c == "ea") {
-              res.push({ f: "CCC", c: "Ra" });
-            }else if (c == "e") {
-              res.push({ f: "CCC", c: "R" });
-            } else {//ei
-              res.push({ f: "CCC", c: "~" });
+              res.push({
+                f: "CCC",
+                c: "Ra"
+              });
+            } else if (c == "e") {
+              res.push({
+                f: "CCC",
+                c: "R"
+              });
+            } else { //ei
+              res.push({
+                f: "CCC",
+                c: "~"
+              });
             }
           } else if (nyinbiao[i] == "15") {
             //console.log("??");
-            if (zhongidx<=i){   
+            if (zhongidx <= i) {
               if (c == "i") {
                 res.push({ f: "CCC", c: "K" });
               } else if (c == "o") {
-                res.push({ f: "CCC", c: "O" });
+                res.push({
+                  f: "CCC",
+                  c: "O"
+                });
               } else if (c == "u") {
-                res.push({ f: "CCC", c: "u" });//找不到
+                res.push({
+                  f: "CCC",
+                  c: "u"
+                }); //找不到
               } else if (c == "e") {
-                res.push({ f: "CCC", c: "6" });
+                res.push({
+                  f: "CCC",
+                  c: "6"
+                });
               } else if (c == "a") {
-                res.push({ f: "CCC", c: "-" });
-              } else {//y
-                res.push({ f: "CCC", c: "B" });
+                res.push({
+                  f: "CCC",
+                  c: "-"
+                });
+              } else { //y
+                res.push({
+                  f: "CCC",
+                  c: "B"
+                });
               }
-              zhongidx=100;
-            }else{
+              zhongidx = 100;
+            } else {
               if (c == "i") {
-                res.push({ f: "CCC", c: "K" });
+                res.push({
+                  f: "CCC",
+                  c: "K"
+                });
               } else if (c == "o") {
-                res.push({ f: "CCC", c: "O" });
+                res.push({
+                  f: "CCC",
+                  c: "O"
+                });
               } else if (c == "u") {
-                res.push({ f: "CCC", c: "=" });//找不到
+                res.push({
+                  f: "CCC",
+                  c: "="
+                }); //找不到
               } else if (c == "e") {
-                res.push({ f: "CCC", c: "J" });
+                res.push({
+                  f: "CCC",
+                  c: "J"
+                });
               } else if (c == "a") {
-                res.push({ f: "CCC", c: "-" });
-              }  else {//y
-              
-                res.push({ f: "CCC", c: "B" });
+                res.push({
+                  f: "CCC",
+                  c: "-"
+                });
+              } else { //y
+
+                res.push({
+                  f: "CCC",
+                  c: "B"
+                });
               }
             }
           } else if (nyinbiao[i] == "16") {
             if (c == "e") {
-              res.push({ f: "CCC", c: "U" });
+              res.push({
+                f: "CCC",
+                c: "U"
+              });
             } else if (c == "a") {
-              res.push({ f: "CCC", c: "Z" });//找不到
-            } else {//u
-              res.push({ f: "CCC", c: ")" });
+              res.push({
+                f: "CCC",
+                c: "Z"
+              }); //找不到
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: ")"
+              });
             }
           } else if (nyinbiao[i] == "17") {
-            res.push({ f: "CCC", c: "Z" });
+            res.push({
+              f: "CCC",
+              c: "Z"
+            });
           } else if (nyinbiao[i] == "18") {
             if (c == "a") {
-              res.push({ f: "CCC", c: "G" });
+              res.push({
+                f: "CCC",
+                c: "G"
+              });
             } else if (c == "e") {
-              res.push({ f: "CCC", c: "F" });//找不到
+              res.push({
+                f: "CCC",
+                c: "F"
+              }); //找不到
             } else if (c == "iou") {
-              res.push({ f: "CCC", c: "iSu" });//找不到
+              res.push({
+                f: "CCC",
+                c: "iSu"
+              }); //找不到
             } else if (c == "i") {
-              res.push({ f: "CCC", c: "i" });//找不到
+              res.push({
+                f: "CCC",
+                c: "i"
+              }); //找不到
             } else if (c == "o") {
-              res.push({ f: "CCC", c: "S" });//找不到
+              res.push({
+                f: "CCC",
+                c: "S"
+              }); //找不到
             } else if (c == "u") {
-              res.push({ f: "CCC", c: "A" });//找不到
+              res.push({
+                f: "CCC",
+                c: "A"
+              }); //找不到
             } else if (c == "r") {
-              res.push({ f: "CCC", c: ";" });//找不到
+              res.push({
+                f: "CCC",
+                c: ";"
+              }); //找不到
             } else if (c == "er") {
               res.push({ f: "CCC", c: "H" });//找不到
             } else if (c == "io") {
@@ -450,21 +683,39 @@ class Content extends AppBase {
             }
           } else if (nyinbiao[i] == "3101") {
             if (c == "ow") {
-              res.push({ f: "CCC", c: "Ww" });
-            }  else {//u
-              res.push({ f: "CCC", c: "W" });
+              res.push({
+                f: "CCC",
+                c: "Ww"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: "W"
+              });
             }
           } else if (nyinbiao[i] == "3102") {
             if (c == "or") {
-              res.push({ f: "CCC", c: "L" });
-            } else {//u
-              res.push({ f: "", c: c });
+              res.push({
+                f: "CCC",
+                c: "L"
+              });
+            } else { //u
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "3103") {
             if (c == "ur") {
-              res.push({ f: "CCC", c: "<" });
-            } else {//u
-              res.push({ f: "", c: c });
+              res.push({
+                f: "CCC",
+                c: "<"
+              });
+            } else { //u
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "3104") {
             if (c == "u") {
@@ -474,111 +725,219 @@ class Content extends AppBase {
             }
           } else if (nyinbiao[i] == "19") {
             if (c == "c") {
-              res.push({ f: "B", c: c });
-            }else{
-              res.push({ f: "", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
+            } else {
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "20") {
             if (c == "d") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else if (c == "ght") {
-              res.push({ f: "BB", c: "gh" });
-              res.push({ f: "", c: "t" });
+              res.push({
+                f: "BB",
+                c: "gh"
+              });
+              res.push({
+                f: "",
+                c: "t"
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "21") {
             if (c == "f") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "22") {
             if (c == "g") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "23") {
             if (c == "n") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "24") {
             if (c == "s") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "25") {
             if (c == "x") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "26") {
             if (c == "z") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "27") {
             if (c == "th") {
-              res.push({ f: "B", c: c });
+              res.push({
+                f: "B",
+                c: c
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "28") {
             if (c == "wh") {
-              res.push({ f: "", c: "w" });
-              res.push({ f: "BB", c: "h" });
+              res.push({
+                f: "",
+                c: "w"
+              });
+              res.push({
+                f: "BB",
+                c: "h"
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
           } else if (nyinbiao[i] == "29") {
             if (c == "wh") {
-              res.push({ f: "BB", c: "w" });
-              res.push({ f: "", c: "h" });
+              res.push({
+                f: "BB",
+                c: "w"
+              });
+              res.push({
+                f: "",
+                c: "h"
+              });
             } else {
-              res.push({ f: "", c: c });
+              res.push({
+                f: "",
+                c: c
+              });
             }
-          }      else{
+          } else {
             if (c == "a") {
-              res.push({ f: "CCC", c: "T" });
+              res.push({
+                f: "CCC",
+                c: "T"
+              });
             } else if (c == "e") {
-              res.push({ f: "CCC", c: "R" });//找不到
+              res.push({
+                f: "CCC",
+                c: "R"
+              }); //找不到
             } else if (c == "i") {
-              res.push({ f: "CCC", c: "E" });//找不到
+              res.push({
+                f: "CCC",
+                c: "E"
+              }); //找不到
             } else if (c == "o") {
-              res.push({ f: "CCC", c: "W" });//找不到
+              res.push({
+                f: "CCC",
+                c: "W"
+              }); //找不到
             } else if (c == "u") {
-              res.push({ f: "CCC", c: "Q" });//找不到
+              res.push({
+                f: "CCC",
+                c: "Q"
+              }); //找不到
             } else if (c == "r") {
-              res.push({ f: "CCC", c: "X" });//找不到
+              res.push({
+                f: "CCC",
+                c: "X"
+              }); //找不到
             } else if (c == "y") {
-              res.push({ f: "CCC", c: "V" });//找不到
-            } else if (c == "w") {//ar
-              res.push({ f: "CCC", c: "C" });
-            }else{
+              res.push({
+                f: "CCC",
+                c: "V"
+              }); //找不到
+            } else if (c == "w") { //ar
+              res.push({
+                f: "CCC",
+                c: "C"
+              });
+            } else {
 
             }
           }
         } else {
-          if(c=="gh"){
-            res.push({ f: "BB", c: c });
-          }else{
+          if (c == "gh") {
+            res.push({
+              f: "BB",
+              c: c
+            });
+          } else {
 
-            res.push({ f: "", c: c });
+            res.push({
+              f: "",
+              c: c
+            });
           }
         }
       }
-      
+
     }
     return res;
   }
-  listen(e){
-    var src=e.currentTarget.dataset.src;
+  listen(e) {
+    var src = e.currentTarget.dataset.src;
     console.log(src);
     const innerAudioContext = wx.createInnerAudioContext()
     innerAudioContext.autoplay = true
@@ -592,22 +951,25 @@ class Content extends AppBase {
     })
   }
 
-  toauth(e){
-   wx.navigateTo({
-     url: '/pages/auth/auth',
-     success: function(res) {},
-     fail: function(res) {},
-     complete: function(res) {},
-   })
+  toauth(e) {
+    wx.navigateTo({
+      url: '/pages/auth/auth',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   }
 }
 var content = new Content();
 var body = content.generateBodyJson();
 body.onLoad = content.onLoad;
-body.onMyShow = content.onMyShow; 
+body.onMyShow = content.onMyShow;
 body.calc = content.calc;
 body.insert_flg = content.insert_flg;
-body.listen = content.listen; 
+body.listen = content.listen;
 body.toauth = content.toauth;
 body.gotrans = content.gotrans;
+body.btnopendetails = content.btnopendetails;
+body.bindclosedetails = content.bindclosedetails;
+body.toother = content.toother;
 Page(body)

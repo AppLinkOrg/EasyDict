@@ -101,9 +101,6 @@ export class AppBase {
       contactkefu: base.contactkefu,
       contactweixin: base.contactweixin, 
       download: base.download
-
-
-      
     }
   }
   log() {
@@ -115,7 +112,6 @@ export class AppBase {
     console.log("onload");
     this.Base.setBasicInfo();
     this.Base.setMyData({options:options});
-
     ApiConfig.SetUnicode(this.Base.unicode);
   }
   gotoOpenUserInfoSetting() {
