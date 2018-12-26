@@ -26,7 +26,7 @@
   <form bindsubmit='gotrans'>
     <view class=''>
       <view class='margin-20 '>
-        <textarea style='' auto-height='true' maxlength='-1' class='padding-20 text_box' placeholder='填写需要翻译的内容，只能输入英文单词或者汉词组' name="word"></textarea>
+        <textarea style='' auto-height='true' maxlength='-1' class='padding-20 text_box' placeholder='填写需要翻译的内容，只能输入英文单词或者汉词组' value='{{searchword}}' name="word"></textarea>
       </view>
 
       <button style='margin-top:60rpx' form-type='submit' hover-class='evaluation_hover' class='evaluation txt-white '>点击翻译</button>
@@ -40,22 +40,27 @@
   <block wx:if="{{wordresult!=undefined}}">
 
     <block wx:if="{{wordresult.keytype=='1'}}">
+      
+      <view class='text-center flex-row flex-column margin-top-80' wx:if='{{wordresult.detail.length==0}}'>
+        <image class='margin-left-40 img' src='{{uploadpath}}resource/{{res.notyet}}'></image>
+        <view class='h5 margin-top-20'>暂无收录,请点击联系客服添加</view>
+      </view>
       <view wx:for="{{wordresult.detail}}" wx:key="k1" wx:for-item="k1" class='padding'>
         <view class='txt-black txt-bold'>中文发音</view>
         <view class='margin-top-20'>/ {{k1.word_symbol}} /</view>
         <view class='txt-black txt-bold margin-top-20'>词典翻译</view>
         <block wx:for="{{k1.parts}}" wx:key="k2" wx:for-item="k2">
-          <block wx:for="{{k2.means}}" wx:key="k3" wx:for-item="k3">
+          <block wx:for="{{k2.means}}" wx:key="k3" wx:for-item="k3" wx:if="{{k3.trans!=undefined}}">
             <view class='flex-row margin-top'>
               <view class=''>
-                <image bindtap='listen' data-src="{{k3.trans.pron}}" class='icon ' src='{{uploadpath}}resource/{{res.laba}}'></image>
+                <image bindtap='listen' data-src="{{k3.trans.speech}}" class='icon ' src='{{uploadpath}}resource/{{res.laba}}'></image>
               </view>
               <view class='margin-left flex-1'>
                 <view class='txt-primary' bindtap='gotrans' data-word="{{k3.trans.key}}">
                   <text wx:for="{{k3.trans.easy}}" wx:key="k2" wx:for-item="cs" class='h4 txt-primary {{cs.f}}'>{{cs.c}}</text>
                 </view>
-                <view wx:for="{{k3.trans.pos}}" wx:key="k2" wx:for-item="c3" wx:for-index='idc' class='txt-gray h6'>
-                  {{c3}} {{k3.trans.acceptation[idc]}}
+                <view wx:for="{{k3.trans.explains}}" wx:key="k2" wx:for-item="c3" wx:for-index='idc' class='txt-gray h6'>
+                  {{c3}}
                 </view>
               </view>
             </view>
@@ -67,23 +72,23 @@
     <block wx:if="{{wordresult.keytype=='0'}}">
 
 
-      <view class='text-center flex-row flex-column margin-top-80' wx:if='{{wordresult.acceptation==undefined||wordresult.acceptation.length==0}}'>
+      <view class='text-center flex-row flex-column margin-top-80' wx:if='{{wordresult.ps==undefined}}'>
         <image class='margin-left-40 img' src='{{uploadpath}}resource/{{res.notyet}}'></image>
         <view class='h5 margin-top-20'>暂无收录,请点击联系客服添加</view>
       </view>
 
-      <block wx:if='{{wordresult.acceptation.length>0}}'>
+      <block wx:if='{{wordresult.ps!=undefined}}'>
         <view style='' class=' mid margin-top-80' wx:if="{{wordresult.ps!=''}}">
           <view class='padding-20 txt-black txt-bold'>简易音标</view>
 
           <view class='flex-row flex-center '>
             <view class='flex-1'></view>
-            <view class='text-center h2 txt-black ' style='margin-bottom:70rpx;width:60%;'>
-              <text style='' wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='h1 {{cs.f}}'>{{cs.c}}</text>
+            <view class='text-center h4 txt-black ' style='margin-bottom:70rpx;'>
+              <text style='' wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='{{wordresult.easy.length>9?"h2":"h1"}} {{cs.f}}'>{{cs.c}}</text>
             </view>
 
             <view class='icon_laba'>
-              <image bindtap='listen' class='icon ' src='{{uploadpath}}resource/{{res.laba}}' data-src="{{wordresult.pron}}"></image>
+              <image bindtap='listen' class='icon ' src='{{uploadpath}}resource/{{res.laba}}' data-src="{{wordresult.speech}}"></image>
             </view>
 
             <view class='flex-1'></view>
@@ -97,12 +102,9 @@
             <view class='txt-primary '>{{wordresult.key}}</view>
             <view class='txt-gray' wx:if="{{wordresult.ps!=''}}">【{{wordresult.ps}}】</view>
           </view>
-          <view class='margin-left-20'>
-            <view class='flex-row ' wx:for="{{wordresult.pos}}" wx:key="k" wx:for-index="i">
-              <view class='txt-gray'>{{wordresult.pos[i]}}</view>
-              <view class='txt-gray margin-left-10 flex-1'>
-                {{wordresult.acceptation[i]}}
-              </view>
+          <view class='margin-left-20'> 
+            <view class='flex-row ' wx:for="{{wordresult.explains}}" wx:key="k" wx:for-index="i">
+              <view class='txt-gray'>{{item}}</view>
             </view>
           </view>
 
@@ -112,7 +114,7 @@
         <view style='' class=' margin-bottom padding-bottom-20'>
           <view class=' txt-black txt-bold' style='padding-left:20rpx;margin-top:20rpx'>例句</view>
 
-          <view class='flex-row column padding-20' wx:for="{{wordresult.sent}}" wx:key="k">
+          <view class='flex-row column padding-20' wx:for="{{wordresult.examples}}" wx:key="k">
             <view class='txt-black '>{{item.orig}}</view>
             <view class='txt-gray margin-top-5'>{{item.trans}}</view>
           </view>

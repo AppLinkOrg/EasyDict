@@ -48,6 +48,7 @@ class Content extends AppBase {
     try{
       var k=e.currentTarget.dataset.word;
       if(k!=undefined){
+        this.Base.setMyData({ searchword:k});
         word=k;
       }
     }catch(ex){
@@ -63,7 +64,7 @@ class Content extends AppBase {
       console.log(wordresult);
       if(wordresult.keytype=="0"){
 
-        if (wordresult.ps != ""&&wordresult.easy==undefined) {
+        if (wordresult.ps != undefined&&wordresult.easy==undefined) {
           var item = { word: wordresult.key, yinbiao: wordresult.ps };
           wordresult["easy"] = this.calc(item);
         }
@@ -71,7 +72,7 @@ class Content extends AppBase {
         for (var i = 0; i < wordresult.detail.length;i++){
           for (var j = 0; j < wordresult.detail[i].parts.length; j++) {
             for (var k = 0; k < wordresult.detail[i].parts[j].means.length; k++) {
-              if (wordresult.detail[i].parts[j].means[k].trans.ps != "") {
+              if (wordresult.detail[i].parts[j].means[k].trans != null && wordresult.detail[i].parts[j].means[k].trans.ps != undefined && wordresult.detail[i].parts[j].means[k].trans.easy == undefined) {
                 var item = { word: wordresult.detail[i].parts[j].means[k].trans.key, yinbiao: wordresult.detail[i].parts[j].means[k].trans.ps };
                 wordresult.detail[i].parts[j].means[k].trans.easy = this.calc(item);
               }
@@ -102,6 +103,7 @@ class Content extends AppBase {
     word = word.replace(new RegExp("er", "gm"), ";ER;");
     word = word.replace(new RegExp("ar", "gm"), ";AR;");
     word = word.replace(new RegExp("ir", "gm"), ";IR;");
+    word = word.replace(new RegExp("io", "gm"), ";IO;");
     word = word.replace(new RegExp("ur", "gm"), ";UR;");
     word = word.replace(new RegExp("or", "gm"), ";OR;");
     word = word.replace(new RegExp("ou", "gm"), ";OU;");
@@ -114,6 +116,7 @@ class Content extends AppBase {
 
     word = word.replace(new RegExp("ph", "gm"), ";PH;");
     word = word.replace(new RegExp("sh", "gm"), ";SH;");
+    word = word.replace(new RegExp("cc", "gm"), ";CC;");
     word = word.replace(new RegExp("qu", "gm"), ";QU;");
     word = word.replace(new RegExp("dr", "gm"), ";dr;");
     word = word.replace(new RegExp("gh", "gm"), ";GH;");
@@ -141,10 +144,13 @@ class Content extends AppBase {
     var zhongidx = yinbiao.indexOf("'"); 
     yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
     yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "");
-    yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":");
+    yinbiao = yinbiao.replace(new RegExp("ː", "gm"), ":"); 
     yinbiao = yinbiao.replace(new RegExp(" ", "gm"), " ");
-    yinbiao = yinbiao.replace("(", "");
-    yinbiao = yinbiao.replace(")", "");
+    yinbiao = yinbiao.replace(new RegExp("ˌ", "gm"), "");
+    for(var i=0;i<10;i++){
+      yinbiao = yinbiao.replace("(", "");
+      yinbiao = yinbiao.replace(")", "");
+    }
 
     yinbiao = yinbiao.replace(new RegExp("ʊə", "gm"), ";1;");
     yinbiao = yinbiao.replace(new RegExp("eə", "gm"), ";2;");
@@ -155,8 +161,10 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("aɪ", "gm"), ";15;");
     yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("əʊ", "gm"), ";3101;");
-    yinbiao = yinbiao.replace(new RegExp("ər", "gm"), ";3102;");
+    yinbiao = yinbiao.replace(new RegExp("ər", "gm"), ";3102;"); 
     yinbiao = yinbiao.replace(new RegExp("ə:", "gm"), ";3103;");
+    yinbiao = yinbiao.replace(new RegExp("jʊ", "gm"), ";3104;");
+    yinbiao = yinbiao.replace(new RegExp("jə", "gm"), ";3104;");
     yinbiao = yinbiao.replace(new RegExp("ei", "gm"), ";5;"); 
     yinbiao = yinbiao.replace(new RegExp("ɜ:", "gm"), ";7;");
     yinbiao = yinbiao.replace(new RegExp("ɛ", "gm"), ";;"); //没有对应
@@ -259,7 +267,7 @@ class Content extends AppBase {
           res.push({ f: "", c: "s" });
           res.push({ f: "BB", c: "ch" });
         }else{
-
+          
           res.push({ f: "", c: c });
         }
       }else{
@@ -336,6 +344,8 @@ class Content extends AppBase {
           } else if (nyinbiao[i] == "10") {
             if (c == "o") {
               res.push({ f: "CCC", c: "8" });
+            } else if (c == "or"){//a
+              res.push({ f: "CCC", c: "8r" });
             } else {//a
               res.push({ f: "CCC", c: "7" });
             }
@@ -375,7 +385,7 @@ class Content extends AppBase {
             //console.log("??");
             if (zhongidx<=i){   
               if (c == "i") {
-                res.push({ f: "CCC", c: "I" });
+                res.push({ f: "CCC", c: "K" });
               } else if (c == "o") {
                 res.push({ f: "CCC", c: "O" });
               } else if (c == "u") {
@@ -431,6 +441,10 @@ class Content extends AppBase {
               res.push({ f: "CCC", c: ";" });//找不到
             } else if (c == "er") {
               res.push({ f: "CCC", c: "H" });//找不到
+            } else if (c == "io") {
+              res.push({ f: "CCC", c: "iS" });//找不到
+            } else if (c == "or") {
+              res.push({ f: "CCC", c: "L" });//找不到
             } else {//ar
               res.push({ f: "CCC", c: "*" });
             }
@@ -449,6 +463,12 @@ class Content extends AppBase {
           } else if (nyinbiao[i] == "3103") {
             if (c == "ur") {
               res.push({ f: "CCC", c: "<" });
+            } else {//u
+              res.push({ f: "", c: c });
+            }
+          } else if (nyinbiao[i] == "3104") {
+            if (c == "u") {
+              res.push({ f: "CCC", c: "Q" });
             } else {//u
               res.push({ f: "", c: c });
             }
