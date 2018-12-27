@@ -84,7 +84,7 @@
           <view class='flex-row flex-center '>
             <view class='flex-1'></view>
             <view class='text-center h4 txt-black ' style='margin-bottom:70rpx;'>
-              <text style='' wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='{{wordresult.easy.length>9?"h2":"h1"}} {{cs.f}}'>{{cs.c}}</text>
+              <text style='' wx:for="{{wordresult.easy}}" wx:key="k2" wx:for-item="cs" class='{{wordresult.easy.length>8?"h2":"h1"}} {{cs.f}}'>{{cs.c}}</text>
             </view>
 
             <view class='icon_laba'>

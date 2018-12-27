@@ -162,7 +162,7 @@ overflow:hidden;               /* 内容超出宽度时隐藏超出部分的内�
   font-size: 120rpx !important;
 }
 .h2{
-  font-size: 56rpx !important;
+  font-size: 80rpx !important;
 }
 .h3{
   font-size: 48rpx !important;
