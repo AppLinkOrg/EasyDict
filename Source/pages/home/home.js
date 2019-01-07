@@ -165,6 +165,8 @@ class Content extends AppBase {
     word = word.replace(new RegExp("raha", "gm"), ";RAHA;");
     word = word.replace(new RegExp("rary", "gm"), ";RARY;");
     word = word.replace(new RegExp("arr", "gm"), ";ARR;");
+    word = word.replace(new RegExp("rou", "gm"), ";ROU;");
+    word = word.replace(new RegExp("roa", "gm"), ";ROA;");
     word = word.replace(new RegExp("sch", "gm"), ";SCH;");
     word = word.replace(new RegExp("ght", "gm"), ";GHT;");
     word = word.replace(new RegExp("ere", "gm"), ";ERE;");
@@ -172,13 +174,15 @@ class Content extends AppBase {
     word = word.replace(new RegExp("eou", "gm"), ";EOU;");
     word = word.replace(new RegExp("ear", "gm"), ";EAR;");
     word = word.replace(new RegExp("eer", "gm"), ";EER;");
+    word = word.replace(new RegExp("ure", "gm"), ";URE;");
     word = word.replace(new RegExp("are", "gm"), ";ARE;");
     word = word.replace(new RegExp("eir", "gm"), ";EIR;");
     word = word.replace(new RegExp("air", "gm"), ";AIR;");
+    word = word.replace(new RegExp("ori", "gm"), ";ORI;");
     word = word.replace(new RegExp("oor", "gm"), ";OOR;");
     word = word.replace(new RegExp("our", "gm"), ";OUR;");
     word = word.replace(new RegExp("iou", "gm"), ";IOU;");
-    word = word.replace(new RegExp("ual", "gm"), ";UAL;");
+    //word = word.replace(new RegExp("ual", "gm"), ";UAL;");
     word = word.replace(new RegExp("lly", "gm"), ";llB");
     word = word.replace(new RegExp("ple", "gm"), ";PLE;");
     word = word.replace(new RegExp("ff", "gm"), ";FF;");
@@ -269,7 +273,12 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("eərə", "gm"), ";3107;");
     yinbiao = yinbiao.replace(new RegExp("ɔ:r", "gm"), ";3113;");
     yinbiao = yinbiao.replace(new RegExp("sən", "gm"), ";3121;");
-
+    yinbiao = yinbiao.replace(new RegExp("jʊə", "gm"), ";4001;");
+    yinbiao = yinbiao.replace(new RegExp("raʊ", "gm"), ";4002;");
+    yinbiao = yinbiao.replace(new RegExp("rəʊ", "gm"), ";4003;");
+    yinbiao = yinbiao.replace(new RegExp("ɒrɪ", "gm"), ";4004;");
+    yinbiao = yinbiao.replace(new RegExp("ərɪ", "gm"), ";4005;");
+    
     yinbiao = yinbiao.replace(new RegExp("eər", "gm"), ";3107;");
     yinbiao = yinbiao.replace(new RegExp("erə", "gm"), ";3124;");
     yinbiao = yinbiao.replace(new RegExp("aɪə", "gm"), ";3109;");
@@ -281,7 +290,7 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("rɑ:", "gm"), ";3114;");
     yinbiao = yinbiao.replace(new RegExp("ær", "gm"), ";3115;");;
     yinbiao = yinbiao.replace(new RegExp("iə", "gm"), ";3120;");;
-
+    
     yinbiao = yinbiao.replace(new RegExp("ɑr", "gm"), ";3117;");
     yinbiao = yinbiao.replace(new RegExp("ræ", "gm"), ";3118;");
     yinbiao = yinbiao.replace(new RegExp("ʊə", "gm"), ";1;");
@@ -290,7 +299,7 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("ɔɪ", "gm"), ";4;");
     yinbiao = yinbiao.replace(new RegExp("eɪ", "gm"), ";5;");
     yinbiao = yinbiao.replace(new RegExp("aʊ", "gm"), ";6;");
-    yinbiao = yinbiao.replace(new RegExp("aɪ", "gm"), ";3106;");
+    yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("əu", "gm"), ";3101;");
     yinbiao = yinbiao.replace(new RegExp("əʊ", "gm"), ";3101;");
@@ -654,6 +663,11 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "e8r"
               });
+            } else if (c == "our") { //a
+              res.push({
+                f: "CCC",
+                c: "8ur"
+              });
             } else { //a
               res.push({
                 f: "CCC",
@@ -675,6 +689,11 @@ class Content extends AppBase {
               res.push({
                 f: "CCC",
                 c: "!r"
+              });
+            } else if (c == "ua") {
+              res.push({
+                f: "CCC",
+                c: "[^"
               });
             } else { //a
               res.push({
@@ -976,7 +995,7 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "H"
               });
-            } else { //u
+            }else { //u
               res.push({
                 f: "CCC",
                 c: c
@@ -1309,7 +1328,67 @@ class Content extends AppBase {
                 f: "CCC",
                 c: c
               });
-            }
+            } 
+          } else if (nyinbiao[i] == "4001") {
+            if (c == "ure") {
+              res.push({
+                f: "CCC",
+                c: "Q;e"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4002") {
+            if (c == "rou") {
+              res.push({
+                f: "CCC",
+                c: "r$"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 
+          } else if (nyinbiao[i] == "4003") {
+            if (c == "roa") {
+              res.push({
+                f: "CCC",
+                c: "rWa"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4004") {
+            if (c == "ori") {
+              res.push({
+                f: "CCC",
+                c: "!rK"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4005") {
+            if (c == "ori") {
+              res.push({
+                f: "CCC",
+                c: "SrK"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
           } else if (nyinbiao[i] == "5000") {
             res.push({
               f: "CCC",
@@ -1547,12 +1626,54 @@ class Content extends AppBase {
     })
   }
 
+  listen2(e){
+    var src = "http://dict.youdao.com/dictvoice?audio=" + e.currentTarget.dataset.word;
+    const innerAudioContext = wx.createInnerAudioContext()
+    innerAudioContext.autoplay = true
+    innerAudioContext.src = src;
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+  }
+
   toauth(e) {
     wx.navigateTo({
       url: '/pages/auth/auth',
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
+    })
+  }
+  jubao(){
+    var that=this;
+    wx.showModal({
+      title: '提示',
+      content: '是否确定举报该错误单词',
+      success(res){
+        if(res.confirm){
+          var wordresult = that.Base.getMyData().wordresult;
+          var api = new TranslateApi();
+          var easy=wordresult.easy;
+          var ej=[];
+          for(var i=0;i<easy.length;i++){
+            var f="";
+            if(easy[i].f=="CCC"){
+              f="C";
+            }
+            if (easy[i].f == "BB") {
+              f = "B";
+            }
+            ej.push(f + "@！#￥" + easy[i].c);
+          }
+          api.wrong({ word: wordresult.key, yinbiao: wordresult.ps, result: ej.join("！@#￥")},()=>{
+            that.Base.toast("提交成功")
+          });
+        }
+      }
     })
   }
 }
@@ -1566,6 +1687,8 @@ body.listen = content.listen;
 body.toauth = content.toauth;
 body.gotrans = content.gotrans;
 body.btnopendetails = content.btnopendetails;
-body.bindclosedetails = content.bindclosedetails;
+body.bindclosedetails = content.bindclosedetails; 
 body.toother = content.toother;
+body.listen2 = content.listen2;
+body.jubao = content.jubao;
 Page(body)

@@ -53,7 +53,7 @@
           <block wx:for="{{k2.means}}" wx:key="k3" wx:for-item="k3" wx:if="{{k3.trans!=undefined}}">
             <view class='flex-row margin-top'>
               <view class=''>
-                <image bindtap='listen' data-src="{{k3.trans.speech}}" class='icon ' src='{{uploadpath}}resource/{{res.laba}}'></image>
+                <image bindtap='listen2' data-src="{{k3.trans.speech}}"  data-word="{{k3.trans.key}}"  class='icon ' src='{{uploadpath}}resource/{{res.laba}}'></image>
               </view>
               <view class='margin-left flex-1'>
                 <view class='txt-primary' bindtap='gotrans' data-word="{{k3.trans.key}}">
@@ -78,8 +78,13 @@
       </view>
 
       <block wx:if='{{wordresult.ps!=undefined}}'>
-        <view style='' class=' mid margin-top-80' wx:if="{{wordresult.ps!=''}}">
-          <view class='padding-20 txt-black txt-bold'>简易音标</view>
+        <view style='' class=' mid margin-top-80' wx:if="{{wordresult.ps!=''}}">  
+        <view class='flex-row flex-center'>
+          <view class='padding-20 flex-1 txt-black txt-bold'>简易音标</view>
+          <view class='margin-right'>
+        <image bindtap='jubao'  class='icon' src='{{uploadpath}}resource/{{res.jubao}}'></image>
+          </view>
+        </view>
 
           <view class='flex-row flex-center '>
             <view class='flex-1'></view>
@@ -88,7 +93,7 @@
             </view>
 
             <view class='icon_laba'>
-              <image bindtap='listen' class='icon ' src='{{uploadpath}}resource/{{res.laba}}' data-src="{{wordresult.speech}}"></image>
+              <image bindtap='listen2' class='icon ' src='{{uploadpath}}resource/{{res.laba}}' data-src="{{wordresult.speech}}"  data-word="{{wordresult.key}}"></image>
             </view>
 
             <view class='flex-1'></view>
