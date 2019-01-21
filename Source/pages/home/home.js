@@ -21,7 +21,8 @@ class Content extends AppBase {
     //options.id=5;
     super.onLoad(options);
     this.Base.setMyData({
-      open: 2
+      open: 2,
+      isexported:false
     })
   }
   onMyShow() {
@@ -50,6 +51,8 @@ class Content extends AppBase {
     // }
     //this.Base.setMyData({ list});
   }
+
+  
 
   bindclosedetails(e) {
     var that = this;
@@ -153,10 +156,28 @@ class Content extends AppBase {
     }
     var word = item.word.toLowerCase();
 
-    if (word.lastIndexOf("son") == word.length - 3) {
+    if ( word.indexOf("kn") == 0) {
+
+      word = ";KN;" + word.substring(2);
+    }
+
+    if (word.length>3&&word.lastIndexOf("son") == word.length - 3) {
 
       var a = word.slice(0, word.lastIndexOf("son"));
       word = a + ";SON;";
+      console.log("son??");
+    }
+    if (word.length > 3 && word.lastIndexOf("ple") == word.length - 3) {
+
+      var a = word.slice(0, word.lastIndexOf("ple"));
+      word = a + ";PLE;";
+      console.log("son??");
+    } 
+    if (word.length > 3 && word.lastIndexOf("le") == word.length - 2) {
+
+      var a = word.slice(0, word.lastIndexOf("son"));
+      word = a + ";LE;";
+      console.log("son??");
     }
 
 
@@ -167,6 +188,7 @@ class Content extends AppBase {
     word = word.replace(new RegExp("arr", "gm"), ";ARR;");
     word = word.replace(new RegExp("rou", "gm"), ";ROU;");
     word = word.replace(new RegExp("roa", "gm"), ";ROA;");
+    word = word.replace(new RegExp("rea", "gm"), ";REA;");
     word = word.replace(new RegExp("sch", "gm"), ";SCH;");
     word = word.replace(new RegExp("ght", "gm"), ";GHT;");
     word = word.replace(new RegExp("ere", "gm"), ";ERE;");
@@ -177,15 +199,18 @@ class Content extends AppBase {
     word = word.replace(new RegExp("ure", "gm"), ";URE;");
     word = word.replace(new RegExp("are", "gm"), ";ARE;");
     word = word.replace(new RegExp("eir", "gm"), ";EIR;");
+    word = word.replace(new RegExp("ery", "gm"), ";ERY;");
     word = word.replace(new RegExp("air", "gm"), ";AIR;");
+    word = word.replace(new RegExp("ire", "gm"), ";IRE;");
     word = word.replace(new RegExp("ori", "gm"), ";ORI;");
     word = word.replace(new RegExp("oor", "gm"), ";OOR;");
-    word = word.replace(new RegExp("our", "gm"), ";OUR;");
+    word = word.replace(new RegExp("our", "gm"), ";OUR;"); 
     word = word.replace(new RegExp("iou", "gm"), ";IOU;");
+    word = word.replace(new RegExp("iew", "gm"), ";IEW;");
     //word = word.replace(new RegExp("ual", "gm"), ";UAL;");
-    word = word.replace(new RegExp("lly", "gm"), ";llB");
-    word = word.replace(new RegExp("ple", "gm"), ";PLE;");
+    word = word.replace(new RegExp("lly", "gm"), ";ll;y");
     word = word.replace(new RegExp("ff", "gm"), ";FF;");
+    word = word.replace(new RegExp("dd", "gm"), ";DD;");
     word = word.replace(new RegExp("tt", "gm"), ";TT;");
     word = word.replace(new RegExp("au", "gm"), ";AU;");
     word = word.replace(new RegExp("ay", "gm"), ";AY;");
@@ -193,6 +218,7 @@ class Content extends AppBase {
     word = word.replace(new RegExp("ua", "gm"), ";UA;");
     word = word.replace(new RegExp("ea", "gm"), ";EA;");
     word = word.replace(new RegExp("ew", "gm"), ";EW;");
+    word = word.replace(new RegExp("eo", "gm"), ";EO;");
     word = word.replace(new RegExp("er", "gm"), ";ER;");
     word = word.replace(new RegExp("ai", "gm"), ";AI;");
     word = word.replace(new RegExp("ui", "gm"), ";UI;");
@@ -212,6 +238,7 @@ class Content extends AppBase {
     word = word.replace(new RegExp("oi", "gm"), ";OI;");
     word = word.replace(new RegExp("oy", "gm"), ";OY;");
 
+    word = word.replace(new RegExp("ld", "gm"), ";LD;");
     word = word.replace(new RegExp("hn", "gm"), ";HN;");
     word = word.replace(new RegExp("ph", "gm"), ";PH;");
     word = word.replace(new RegExp("sc", "gm"), ";SC;");
@@ -244,7 +271,8 @@ class Content extends AppBase {
     word = word.replace(new RegExp("w", "gm"), ";W;");
     //console.log(word);
 
-    var yinbiao = item.yinbiao.toLowerCase();
+    var yinbiao = item.yinbiao.toLowerCase(); 
+    yinbiao = yinbiao.replace(new RegExp("ˌ", "gm"), "'");
     yinbiao = yinbiao.replace(new RegExp("ˈ", "gm"), "'");
     var zhongidx = yinbiao.indexOf("'");
     //yinbiao = yinbiao.replace(new RegExp("'", "gm"), "");
@@ -255,6 +283,7 @@ class Content extends AppBase {
 
     var parr = [];
 
+
     for (var i = 0; i < 10; i++) {
       yinbiao = yinbiao.replace("(", "");
       yinbiao = yinbiao.replace(")", "");
@@ -262,6 +291,9 @@ class Content extends AppBase {
         parr.push(yinbiao.indexOf("'"));
         yinbiao = yinbiao.replace("'", "");
       }
+    }
+    if (parr.length==0){
+      parr.push(0);
     }
 
 
@@ -274,31 +306,35 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("ɔ:r", "gm"), ";3113;");
     yinbiao = yinbiao.replace(new RegExp("sən", "gm"), ";3121;");
     yinbiao = yinbiao.replace(new RegExp("jʊə", "gm"), ";4001;");
-    yinbiao = yinbiao.replace(new RegExp("raʊ", "gm"), ";4002;");
+    yinbiao = yinbiao.replace(new RegExp("raʊ", "gm"), ";4002;"); 
     yinbiao = yinbiao.replace(new RegExp("rəʊ", "gm"), ";4003;");
     yinbiao = yinbiao.replace(new RegExp("ɒrɪ", "gm"), ";4004;");
     yinbiao = yinbiao.replace(new RegExp("ərɪ", "gm"), ";4005;");
+    yinbiao = yinbiao.replace(new RegExp("erɪ", "gm"), ";4006;");
+    yinbiao = yinbiao.replace(new RegExp("ɪre", "gm"), ";4009;");
+    yinbiao = yinbiao.replace(new RegExp("rɪə", "gm"), ";4012;");
     
     yinbiao = yinbiao.replace(new RegExp("eər", "gm"), ";3107;");
     yinbiao = yinbiao.replace(new RegExp("erə", "gm"), ";3124;");
-    yinbiao = yinbiao.replace(new RegExp("aɪə", "gm"), ";3109;");
-    yinbiao = yinbiao.replace(new RegExp("rəu", "gm"), ";3116;");
-    yinbiao = yinbiao.replace(new RegExp("kw", "gm"), ";3108;");
+    yinbiao = yinbiao.replace(new RegExp("aɪə", "gm"), ";3109;"); 
+    yinbiao = yinbiao.replace(new RegExp("rəu", "gm"), ";3116;"); 
+    yinbiao = yinbiao.replace(new RegExp("reɪ", "gm"), ";4010;");
+    //yinbiao = yinbiao.replace(new RegExp("rɪə", "gm"), ";4011;"); 
+    yinbiao = yinbiao.replace(new RegExp("kw", "gm"), ";3108;"); 
+    yinbiao = yinbiao.replace(new RegExp("wʌ", "gm"), ";4007;");
     yinbiao = yinbiao.replace(new RegExp("rɔ", "gm"), ";3127;");
     yinbiao = yinbiao.replace(new RegExp("rə", "gm"), ";3110;");
     yinbiao = yinbiao.replace(new RegExp("ɒɪ", "gm"), ";3111;");
     yinbiao = yinbiao.replace(new RegExp("rɑ:", "gm"), ";3114;");
     yinbiao = yinbiao.replace(new RegExp("ær", "gm"), ";3115;");;
     yinbiao = yinbiao.replace(new RegExp("iə", "gm"), ";3120;");;
-    
-    yinbiao = yinbiao.replace(new RegExp("ɑr", "gm"), ";3117;");
-    yinbiao = yinbiao.replace(new RegExp("ræ", "gm"), ";3118;");
+
+    yinbiao = yinbiao.replace(new RegExp("aʊ", "gm"), ";6;");
     yinbiao = yinbiao.replace(new RegExp("ʊə", "gm"), ";1;");
     yinbiao = yinbiao.replace(new RegExp("eə", "gm"), ";2;");
     yinbiao = yinbiao.replace(new RegExp("ɪə", "gm"), ";3;");
     yinbiao = yinbiao.replace(new RegExp("ɔɪ", "gm"), ";4;");
     yinbiao = yinbiao.replace(new RegExp("eɪ", "gm"), ";5;");
-    yinbiao = yinbiao.replace(new RegExp("aʊ", "gm"), ";6;");
     yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("ju:", "gm"), ";12;");
     yinbiao = yinbiao.replace(new RegExp("əu", "gm"), ";3101;");
@@ -309,6 +345,14 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("jə", "gm"), ";3104;");
     yinbiao = yinbiao.replace(new RegExp("ɑ:", "gm"), ";3105;");
     yinbiao = yinbiao.replace(new RegExp("ei", "gm"), ";5;");
+    yinbiao = yinbiao.replace(new RegExp("əl", "gm"), ";4008;");
+    yinbiao = yinbiao.replace(new RegExp("ɑr", "gm"), ";3117;");
+    yinbiao = yinbiao.replace(new RegExp("ræ", "gm"), ";3118;");
+    yinbiao = yinbiao.replace(new RegExp("rɪ", "gm"), ";3129;");
+    yinbiao = yinbiao.replace(new RegExp("rɒ", "gm"), ";3130;"); 
+    yinbiao = yinbiao.replace(new RegExp("wɪ", "gm"), ";3131;");
+    yinbiao = yinbiao.replace(new RegExp("ruː", "gm"), ";3133;");
+    yinbiao = yinbiao.replace(new RegExp("ru", "gm"), ";3133;");
     yinbiao = yinbiao.replace(new RegExp("r", "gm"), ";R;");
     yinbiao = yinbiao.replace(new RegExp("ɝ", "gm"), ";7;");
     yinbiao = yinbiao.replace(new RegExp("ɜ:", "gm"), ";7;");
@@ -327,7 +371,7 @@ class Content extends AppBase {
     yinbiao = yinbiao.replace(new RegExp("e", "gm"), ";16;");
     yinbiao = yinbiao.replace(new RegExp("a:", "gm"), ";17;");
     yinbiao = yinbiao.replace(new RegExp("ə", "gm"), ";18;");
-    yinbiao = yinbiao.replace(new RegExp("a", "gm"), ";;");
+    yinbiao = yinbiao.replace(new RegExp("a", "gm"), ";3132;");
     yinbiao = yinbiao.replace(new RegExp("sn", "gm"), ";3121;");
     yinbiao = yinbiao.replace(new RegExp("gz", "gm"), ";25;");
     yinbiao = yinbiao.replace(new RegExp("ŋɡ", "gm"), ";NG;");
@@ -430,6 +474,14 @@ class Content extends AppBase {
             f: "CCC",
             c: "Fr"
           });
+        } else if (c == "ld") {
+          res.push({
+            f: "BB",
+            c: "l"
+          }); res.push({
+            f: "CCC",
+            c: "d"
+          });
         } else {
           res.push({
             f: "CCC",
@@ -489,6 +541,11 @@ class Content extends AppBase {
               res.push({
                 f: "CCC",
                 c: "Ui;"
+              }); //their
+            } else if (c == "ere") {
+              res.push({
+                f: "CCC",
+                c: "U;e"
               }); //their
             } else { //air
               res.push({
@@ -551,10 +608,25 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "UI"
               });
-            } else { //ey
+            } else if (c == "ai") {
+              res.push({
+                f: "CCC",
+                c: "Ti"
+              });
+            } else if (c == "ey") {
               res.push({
                 f: "CCC",
                 c: "UB"
+              });
+            } else if (c == "ea") {
+              res.push({
+                f: "CCC",
+                c: "eT"
+              });
+            } else { //ey
+              res.push({
+                f: "CCC",
+                c: c
               });
             }
           } else if (nyinbiao[i] == "6") {
@@ -590,10 +662,20 @@ class Content extends AppBase {
                 f: "CCC",
                 c: ">"
               });
-            } else { //ar
+            } else if (c == "ear") {
+              res.push({
+                f: "CCC",
+                c: "e`"
+              });
+            } else if (c == "ar") {
               res.push({
                 f: "CCC",
                 c: "ar"
+              });
+            } else { //ar
+              res.push({
+                f: "CCC",
+                c: c
               }); //找不到
             }
           } else if (nyinbiao[i] == "8") {
@@ -637,12 +719,21 @@ class Content extends AppBase {
               }); //Thailand
             }
           } else if (nyinbiao[i] == "10") {
-            if (c == "o") {
+            if (c == "eor") { //a
               res.push({
                 f: "CCC",
-                c: "!"
+                c: "e8r"
               });
-              //Bombay
+            } else if (c == "our") { //a
+              res.push({
+                f: "CCC",
+                c: "8ur"
+              });
+            } else if (c == "oor") { //a
+              res.push({
+                f: "CCC",
+                c: "8or"
+              });
             } else if (c == "or") { //a
               res.push({
                 f: "CCC",
@@ -653,25 +744,31 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "7u"
               });
-            } else if (c == "ou") { //a
+            } else if (c == "ar") { //a
+              res.push({
+                f: "CCC",
+                c: "7r"
+              });
+            }else if (c == "ou") { //a
               res.push({
                 f: "CCC",
                 c: "8u"
               });
-            } else if (c == "eor") { //a
+            } else if (c == "o") {
               res.push({
                 f: "CCC",
-                c: "e8r"
+                c: "!"
               });
-            } else if (c == "our") { //a
+              //Bombay
+            } else if (c == "a") { //a
               res.push({
                 f: "CCC",
-                c: "8ur"
+                c: "7"
               });
             } else { //a
               res.push({
                 f: "CCC",
-                c: "7"
+                c: c
               });
             }
           } else if (nyinbiao[i] == "11") {
@@ -718,10 +815,15 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "eC"
               }); //找不到
-            } else if (c == "o") {
+            } else if (c == "iew") {
               res.push({
                 f: "CCC",
-                c: "o"
+                c: "Ke,"
+              }); //找不到
+            }else if (c == "o") {
+              res.push({
+                f: "CCC",
+                c: "'"
               }); //找不到
             } else if (c == "ou") {
               res.push({
@@ -772,10 +874,20 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "}o"
               }); //找不到
-            } else { //o
+            } else if (c == "ou") {
+              res.push({
+                f: "CCC",
+                c: "Su"
+              }); //找不到
+            } else if (c == "o") {
               res.push({
                 f: "CCC",
                 c: "W"
+              }); //找不到
+            } else { //o
+              res.push({
+                f: "CCC",
+                c: c
               });
             }
           } else if (nyinbiao[i] == "14") {
@@ -786,20 +898,35 @@ class Content extends AppBase {
               });
               //read
               //jean
-            } else if (c == "e") {
-              res.push({
-                f: "CCC",
-                c: "R"
-              });
             } else if (c == "ie") {
               res.push({
                 f: "CCC",
                 c: "iR"
               });
+            } else if (c == "e") {
+              res.push({
+                f: "CCC",
+                c: "R"
+              });
+            } else if (c == "ei") {
+              res.push({
+                f: "CCC",
+                c: "Ri"
+              });
+            } else if (c == "eo") {
+              res.push({
+                f: "CCC",
+                c: "Ro"
+              });
+            } else if (c == "i") {
+              res.push({
+                f: "CCC",
+                c: "R"
+              });
             } else { //ei
               res.push({
                 f: "CCC",
-                c: "~"
+                c: c
               });
             }
           } else if (nyinbiao[i] == "15") {
@@ -831,7 +958,7 @@ class Content extends AppBase {
             } else if (c == "a") {
               res.push({
                 f: "CCC",
-                c: "|"
+                c: havezhong ? "a" : "-"
               });
             } else if (c == "ey") {
               res.push({
@@ -848,10 +975,20 @@ class Content extends AppBase {
                 f: "CCC",
                 c: havezhong ? "uI" : "uK"
               });
-            } else { //y
+            } else if (c == "ei") {
+              res.push({
+                f: "CCC",
+                c: "eE"
+              });
+            } else if (c == "y") {
               res.push({
                 f: "CCC",
                 c: "B"
+              });
+            } else { //y
+              res.push({
+                f: "CCC",
+                c: c
               });
             }
 
@@ -871,12 +1008,27 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "Ua"
               }); //找不到
-            } else { //u
+            } else if (c == "ai") {
               res.push({
                 f: "CCC",
-                c: ")"
+                c: "_i"
+              }); //找不到
+            } else if (c == "u") {
+              res.push({
+                f: "CCC",
+                c: "_i"
+              }); //找不到
+            } else if (c == "ie") {
+              res.push({
+                f: "CCC",
+                c: "iU"
+              }); //找不到
+            }  else { //u
+              res.push({
+                f: "CCC",
+                c: c
               });
-            }
+            } 
           } else if (nyinbiao[i] == "17") {
             if (c == "ar") {
               res.push({
@@ -951,6 +1103,12 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "H"
               }); //找不到
+            } else if (c == "ure") {
+              console.log("??");
+              res.push({
+                f: "CCC",
+                c: "u;e"
+              }); //找不到
             } else if (c == "io") {
               res.push({
                 f: "CCC",
@@ -961,10 +1119,15 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "L"
               }); //找不到
+            } else if (c == "ar") {
+              res.push({
+                f: "CCC",
+                c: "ar"
+              }); //找不到
             } else { //ar
               res.push({
                 f: "CCC",
-                c: "*"
+                c: c
               });
             }
           } else if (nyinbiao[i] == "3101") {
@@ -978,10 +1141,20 @@ class Content extends AppBase {
                 f: "CCC",
                 c: "eWu"
               });
-            } else { //u
+            } else if (c == "ou") {
+              res.push({
+                f: "CCC",
+                c: "Wu"
+              });
+            } else if (c == "u") {
               res.push({
                 f: "CCC",
                 c: "W"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
               });
             }
           } else if (nyinbiao[i] == "3102") {
@@ -1096,7 +1269,7 @@ class Content extends AppBase {
                 c: "EF"
               });
             }
-            if (c == "ia") {
+            else if (c == "ia") {
               res.push({
                 f: "CCC",
                 c: "EG"
@@ -1329,6 +1502,66 @@ class Content extends AppBase {
                 c: c
               });
             } 
+          } else if (nyinbiao[i] == "3129") {
+            if (c == "ery") {
+              res.push({
+                f: "CCC",
+                c: "erB"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            }
+          } else if (nyinbiao[i] == "3130") {
+            if (c == "ro") {
+              res.push({
+                f: "CCC",
+                c: "r!"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            }
+          } else if (nyinbiao[i] == "3131") {
+            if (c == "ua") {
+              res.push({
+                f: "CCC",
+                c: "[-"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            }
+          } else if (nyinbiao[i] == "3132") {
+            if (c == "ow") {
+              res.push({
+                f: "CCC",
+                c: "%"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            }
+          } else if (nyinbiao[i] == "3133") {
+            if (c == "rou") {
+              res.push({
+                f: "CCC",
+                c: "r'u"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            }
           } else if (nyinbiao[i] == "4001") {
             if (c == "ure") {
               res.push({
@@ -1382,6 +1615,83 @@ class Content extends AppBase {
               res.push({
                 f: "CCC",
                 c: "SrK"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4006") {
+            if (c == "ery") {
+              res.push({
+                f: "CCC",
+                c: "UrB"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4007") {
+            if (c == "o") {
+              res.push({
+                f: "",
+                c: "ộ"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4009") {
+            if (c == "ire") {
+              res.push({
+                f: "CCC",
+                c: "KrU"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4010") {
+            if (c == "ra") {
+              res.push({
+                f: "CCC",
+                c: "rT"
+              });
+            } else if (c == "rea") {
+              res.push({
+                f: "CCC",
+                c: "reT"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 
+          } else if (nyinbiao[i] == "4011") {
+            if (c == "rea") {
+              res.push({
+                f: "CCC",
+                c: "r6G"
+              });
+            } else { //u
+              res.push({
+                f: "CCC",
+                c: c
+              });
+            } 4001
+          } else if (nyinbiao[i] == "4012") {
+            if (c == "rea") {
+              res.push({
+                f: "CCC",
+                c: "r6G"
               });
             } else { //u
               res.push({
@@ -1669,12 +1979,54 @@ class Content extends AppBase {
             }
             ej.push(f + "@！#￥" + easy[i].c);
           }
-          api.wrong({ word: wordresult.key, yinbiao: wordresult.ps, result: ej.join("！@#￥")},()=>{
+          api.verifywordupdate({ status:"B", word: wordresult.key, yinbiao: wordresult.ps, result: ej.join("！@#￥")},()=>{
             that.Base.toast("提交成功")
           });
         }
       }
     })
+  }
+  batch(){
+    var api=new TranslateApi();
+    var count = 0;
+    var total = 0;
+    api.verifywordlist({ orderby: " r_main.id limit 0,500",
+          status:"W" }, (list)=>{
+      this.Base.setMyData({total:list.length});
+      for(var cj of list){
+        api.trans({
+          word: cj.word
+        }, (wordresult) => {
+          console.log("wordresult");
+          console.log(wordresult);
+          if (wordresult.keytype == "0") {
+
+            if (wordresult.ps != undefined && wordresult.easy == undefined) {
+              var item = {
+                word: wordresult.key,
+                yinbiao: wordresult.ps
+              };
+              var easy = this.calc(item);
+              var ej = [];
+              for (var i = 0; i < easy.length; i++) {
+                var f = "";
+                if (easy[i].f == "CCC") {
+                  f = "C";
+                }
+                if (easy[i].f == "BB") {
+                  f = "B";
+                }
+                ej.push(f + "@！#￥" + easy[i].c);
+              }
+              api.verifywordupdate({ status: "B", word: wordresult.key, yinbiao: wordresult.ps, result: ej.join("！@#￥") }, () => {
+                this.Base.setMyData({ count: ++count });
+              });
+            }
+          }
+        });
+      }
+    });
+
   }
 }
 var content = new Content();
@@ -1688,7 +2040,8 @@ body.toauth = content.toauth;
 body.gotrans = content.gotrans;
 body.btnopendetails = content.btnopendetails;
 body.bindclosedetails = content.bindclosedetails; 
-body.toother = content.toother;
+body.toother = content.toother; 
 body.listen2 = content.listen2;
 body.jubao = content.jubao;
+body.batch = content.batch;
 Page(body)

@@ -32,6 +32,10 @@
       <button style='margin-top:60rpx' form-type='submit' hover-class='evaluation_hover' class='evaluation txt-white '>点击翻译</button>
     </view>
   </form>
+  <view wx:if="{{isexported==true}}">
+      <button style='margin-top:60rpx' bindtap='batch' hover-class='evaluation_hover' class='evaluation txt-white '>{{count*100/total}}批量导入{{count}}/{{total}}</button>
+  <progress class='margin-top' wx:if="{{total>0}}" percent="{{count*100/total}}" active />
+  </view>
 
 
 
